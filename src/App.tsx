@@ -3,6 +3,7 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import RouteLayout from "./RouteLayout";
 import NotFound from "./pages/NotFound";
+import Signup from "./pages/Signup";
 
 const router = createBrowserRouter([
 	{
@@ -11,11 +12,9 @@ const router = createBrowserRouter([
 		children: [
 			{ path: "", element: <Home /> },
 			{ path: "about", element: <About /> },
+			{ path: "signup", element: <Signup /> },
+			{ path: "*", element: <NotFound /> },
 		],
-	},
-	{
-		path: "*",
-		element: <NotFound />,
 	},
 ]);
 export default function App() {
