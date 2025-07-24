@@ -9,8 +9,8 @@ export default function Navbar() {
 	}, []);
 	return (
 		<section>
-			<div className="bg-black w-full flex items-center text-white px-4 xl:px-0">
-				{!isOpen && (
+			{!isOpen && (
+				<div className="bg-black w-full flex items-center text-white px-4 xl:px-0">
 					<div className="flex gap-4 justify-between xl:gap-[14.4375rem] py-2 max-w-[73.125rem] w-full mx-auto items-center xl:justify-end relative">
 						<p className="text-[clamp(0.5rem,2.5vw,0.875rem)] w-full min-w-[160.82px] lg:w-max">
 							<span>Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!</span>{" "}
@@ -18,8 +18,9 @@ export default function Navbar() {
 						</p>
 						<Select />
 					</div>
-				)}
-			</div>
+				</div>
+			)}
+
 			<nav className="px-4 xl:px-0 shadow-[0_0.125rem_0_rgba(0,0,0,0.1)] h-[5.875rem] flex items-center justify-center">
 				<header className="max-w-[73.125rem] w-full justify-between mx-auto flex items-center">
 					<span className="font-bold text-[clamp(1.2rem,2.5vw,1.5rem)]">Exclusive</span>
