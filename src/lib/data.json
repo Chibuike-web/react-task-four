@@ -33,14 +33,14 @@
 		"id": "s-series-comfort-chair",
 		"name": "S-Series Comfort Chair",
 		"image": "/products/s-series-comfort-chair.png",
-		"price": 120,
+		"price": 375,
 		"discount": 40,
 		"rating": 4.5,
 		"tags": ["Flash Sales"],
 		"reviews": 99
 	},
 	{
-		"id": "havit-hv-g92-gamepad",
+		"id": "havit-hv-g92-gamepad1",
 		"name": "HAVIT HV-G92 Gamepad",
 		"image": "/products/havit-hv-g92-gamepad.png",
 		"price": 120,
@@ -48,5 +48,44 @@
 		"rating": 4.5,
 		"tags": ["Flash Sales"],
 		"reviews": 88
+	},
+	{
+		"id": "the-north-coat",
+		"name": "The north coat",
+		"image": "/products/the-north-coat.png",
+		"price": 360,
+		"discount": 40,
+		"rating": 5,
+		"tags": ["Best Selling Products"],
+		"reviews": 65
+	},
+	{
+		"id": "gucci-duffle-bag",
+		"name": "Gucci duffle bag",
+		"image": "/products/gucci-duffle-bag.png",
+		"price": 1160,
+		"discount": 40,
+		"rating": 4.5,
+		"tags": ["Best Selling Products"],
+		"reviews": 65
+	},
+	{
+		"id": "rgb-liquid-cpu-cooler",
+		"name": "RGB liquid CPU Cooler",
+		"image": "/products/rgb-liquid-cpu-cooler.png",
+		"price": 170,
+		"discount": 10,
+		"rating": 4.5,
+		"tags": ["Best Selling Products"],
+		"reviews": 65
+	},
+	{
+		"id": "small-bookself",
+		"name": "Small BookSelf",
+		"image": "/products/small-bookself.png",
+		"price": 360,
+		"rating": 4.5,
+		"tags": ["Best Selling Products"],
+		"reviews": 65
 	}
 ]

@@ -5,6 +5,6 @@ export type Product = {
 	name: string;
 	rating: number;
 	reviews: number;
-	discount: number;
+	discount?: number;
 	tags?: string[];
 };

@@ -1,8 +1,11 @@
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
-import { AppleLogo } from "../assets/Icons";
+
 import heroImage from "../assets/home/hero.png";
 import allProducts from "../lib/data.json";
 import ProductCard from "../components/ProductCard";
+import { useState } from "react";
+import { categories, cn } from "../lib/utils";
+import { AppleLogo } from "../assets/Icons";
 
 export default function Home() {
 	return (
@@ -45,7 +48,7 @@ export default function Home() {
 					</figure>
 				</div>
 			</section>
-			<section className="mt-[140px] max-w-[73.125rem] mx-auto flex flex-col">
+			<section className=" max-w-[73.125rem] mx-auto flex flex-col mt-[70px]">
 				<div className="flex flex-col">
 					<div className="flex items-center gap-6">
 						<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
@@ -97,17 +100,93 @@ export default function Home() {
 				</div>
 
 				<div className="flex gap-7.5 overflow-auto">
-					{allProducts.map((item) => (
-						<ProductCard key={item.id} {...item} />
-					))}
+					{allProducts
+						.filter((item) => item.tags.includes("Flash Sales"))
+						.map((item) => (
+							<ProductCard key={item.id} {...item} />
+						))}
 				</div>
 				<button
 					type="button"
-					className="flex self-center bg-primary px-12 py-4 rounded-[4px] text-white font-medium my-[60px]"
+					className="flex self-center bg-primary px-12 py-4 rounded-[4px] text-white font-medium mt-[60px]"
 				>
 					View All Products
 				</button>
 			</section>
+			<span className="w-full max-w-[73.125rem] mx-auto bg-black/30 h-[0.5px] block mt-[70px]" />
+			<CategoriesSection />
+			<span className="w-full max-w-[73.125rem] mx-auto bg-black/30 h-[0.5px] block mt-[70px]" />
+			<section className="mt-[70px] max-w-[73.125rem] mx-auto flex flex-col">
+				<div className="flex flex-col">
+					<div className="flex items-center gap-6">
+						<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
+						<span className="text-primary font-semibold ">This Month</span>
+					</div>
+					<div className="flex w-full items-end justify-between mt-6 gap-6  mb-10">
+						<div className="flex items-end mt-6 gap-6">
+							<h2 className="font-semibold text-[36px] leading-[30px]">Best Selling Products</h2>
+						</div>
+						<button
+							type="button"
+							className="flex self-center bg-primary px-12 py-4 rounded-[4px] text-white font-medium"
+						>
+							View All
+						</button>
+					</div>
+				</div>
+
+				<div className="flex gap-7.5 overflow-auto">
+					{allProducts
+						.filter((item) => item.tags.includes("Best Selling Products"))
+						.map((item) => (
+							<ProductCard key={item.id} {...item} />
+						))}
+				</div>
+			</section>
 		</main>
 	);
 }
+
+const CategoriesSection = () => {
+	const [categoryId, setCategoryId] = useState("phones");
+	return (
+		<section className="mt-[70px] max-w-[73.125rem] mx-auto flex flex-col">
+			<div className="flex flex-col">
+				<div className="flex items-center gap-6">
+					<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
+					<span className="text-primary font-semibold ">Categories</span>
+				</div>
+				<div className="flex w-full items-end justify-between mt-6 gap-6  mb-10">
+					<div className="flex items-end mt-6 gap-6">
+						<h2 className="font-semibold text-[36px] leading-[30px]">Browse By Category</h2>
+					</div>
+					<div className="flex items-center gap-4">
+						<span className="flex size-[46px] rounded-full bg-gray-100 items-center justify-center">
+							<ArrowLeft />
+						</span>
+						<span className="flex size-[46px] rounded-full bg-gray-100 items-center justify-center">
+							<ArrowRight />
+						</span>
+					</div>
+				</div>
+			</div>
+			<div className="flex gap-7.5 overflow-auto">
+				{categories.map(({ id, label, icon: Icon }) => (
+					<button
+						key={id}
+						onClick={() => setCategoryId(categoryId === id ? "" : id)}
+						className={cn(
+							"flex flex-col items-center justify-center min-w-[170px] h-[145px] rounded-[4px] ",
+							categoryId === id ? "bg-primary text-white" : "border border-black/30"
+						)}
+					>
+						<div className="flex flex-col gap-4 items-center">
+							<Icon />
+							<span>{label}</span>
+						</div>
+					</button>
+				))}
+			</div>
+		</section>
+	);
+};
