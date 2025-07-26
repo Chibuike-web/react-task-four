@@ -3,11 +3,13 @@
 :root {
 	--font-type: "Poppins";
 	--color-primary: hsl(0, 68%, 56%);
+	--color-secondary: hsl(144, 100%, 37%);
 }
 
 @theme {
 	--font-type: var(--font-type);
 	--color-primary: var(--color-primary);
+	--color-secondary: var(--color-secondary);
 }
 
 body {
