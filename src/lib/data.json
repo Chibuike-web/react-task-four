@@ -1,5 +1,88 @@
 [
 	{
+		"id": "breed-dry-dog-food",
+		"name": "Breed Dry Dog Food",
+		"image": "/products/breed-dry-dog-food.png",
+		"price": 100,
+		"rating": 3,
+		"reviews": 35
+	},
+	{
+		"id": "canon-eos-dslr-camera",
+		"name": "CANON EOS DSLR Camera",
+		"image": "/products/canon-eos-dslr-camera.png",
+		"price": 360,
+		"rating": 4,
+		"reviews": 95
+	},
+	{
+		"id": "asus-fhd-gaming-laptop",
+		"name": "ASUS FHD Gaming Laptop",
+		"image": "/products/asus-fhd-gaming-laptop.png",
+		"price": 700,
+		"rating": 5,
+		"reviews": 325
+	},
+	{
+		"id": "curology-product-set",
+		"name": "Curology Product Set",
+		"image": "/products/curology-product-set.png",
+		"price": 500,
+		"rating": 4,
+		"reviews": 145
+	},
+	{
+		"id": "kids-electric-car",
+		"name": "Kids Electric Car",
+		"image": "/products/kids-electric-car.png",
+		"price": 960,
+		"rating": 5,
+		"tags": ["New"],
+		"reviews": 65,
+		"colors": [
+			{ "id": "brightRed", "label": "Bright Red", "colorCode": "bg-[#FB1314]" },
+			{ "id": "darkRed", "label": "Dark Red", "colorCode": "bg-[#DB4444]" }
+		]
+	},
+	{
+		"id": "jr-zoom-soccer-cleats",
+		"name": "Jr. Zoom Soccer Cleats",
+		"image": "/products/jr-zoom-soccer-cleats.png",
+		"price": 1160,
+		"rating": 5,
+		"tags": ["New"],
+		"reviews": 65,
+		"colors": [
+			{ "id": "brightYellow", "label": "Bright Yellow", "colorCode": "bg-[#EEFF61]" },
+			{ "id": "darkRed", "label": "Dark Red", "colorCode": "bg-[#DB4444]" }
+		]
+	},
+	{
+		"id": "gp11-shooter-usb-gamepad",
+		"name": "GP11 Shooter USB Gamepad",
+		"image": "/products/gp11-shooter-usb-gamepad.png",
+		"price": 660,
+		"rating": 4.5,
+		"tags": ["New"],
+		"reviews": 55,
+		"colors": [
+			{ "id": "black", "label": "Black", "colorCode": "bg-[#000000]" },
+			{ "id": "darkRed", "label": "Dark Red", "colorCode": "bg-[#DB4444]" }
+		]
+	},
+	{
+		"id": "quilted-satin-jacket",
+		"name": "Quilted Satin Jacket",
+		"image": "/products/quilted-satin-jacket.png",
+		"price": 660,
+		"rating": 4.5,
+		"reviews": 55,
+		"colors": [
+			{ "id": "black", "label": "Black", "colorCode": "bg-[#000000]" },
+			{ "id": "darkRed", "label": "Dark Red", "colorCode": "bg-[#DB4444]" }
+		]
+	},
+	{
 		"id": "havit-hv-g92-gamepad",
 		"name": "HAVIT HV-G92 Gamepad",
 		"image": "/products/havit-hv-g92-gamepad.png",

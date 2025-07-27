@@ -1,8 +1,12 @@
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import jbl from "../assets/home/jbl.png";
+import playstation from "../assets/home/playstation.png";
+import womenCollection from "../assets/home/women-collection.png";
+import speakers from "../assets/home/speakers.png";
+import perfume from "../assets/home/perfume.png";
 import heroImage from "../assets/home/hero.png";
 import allProducts from "../lib/data.json";
-import ProductCard from "../components/ProductCard";
+import ProductCard, { MainProductCard } from "../components/ProductCard";
 import { useState } from "react";
 import { categories, cn } from "../lib/utils";
 import { AppleLogo } from "../assets/Icons";
@@ -50,7 +54,7 @@ export default function Home() {
 			</section>
 			<section className=" max-w-[73.125rem] mx-auto flex flex-col mt-[70px]">
 				<div className="flex flex-col">
-					<div className="flex items-center gap-6">
+					<div className="flex items-center gap-4">
 						<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
 						<span className="text-primary font-semibold ">Today's</span>
 					</div>
@@ -103,9 +107,11 @@ export default function Home() {
 
 				<div className="flex gap-7.5 overflow-auto">
 					{allProducts
-						.filter((item) => item.tags.includes("Flash Sales"))
+						.filter((item) => item.tags?.includes("Flash Sales"))
 						.map((item) => (
-							<ProductCard key={item.id} {...item} />
+							<div key={item.id} className="min-w-[270px]">
+								<ProductCard {...item} />
+							</div>
 						))}
 				</div>
 				<button
@@ -120,7 +126,7 @@ export default function Home() {
 			<span className="w-full max-w-[73.125rem] mx-auto bg-black/30 h-[0.5px] block mt-[70px]" />
 			<section className="mt-[70px] max-w-[73.125rem] mx-auto flex flex-col">
 				<div className="flex flex-col">
-					<div className="flex items-center gap-6">
+					<div className="flex items-center gap-4">
 						<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
 						<span className="text-primary font-semibold ">This Month</span>
 					</div>
@@ -141,13 +147,15 @@ export default function Home() {
 
 				<div className="flex gap-7.5 overflow-auto">
 					{allProducts
-						.filter((item) => item.tags.includes("Best Selling Products"))
+						.filter((item) => item.tags?.includes("Best Selling Products"))
 						.map((item) => (
-							<ProductCard key={item.id} {...item} />
+							<div key={item.id} className="min-w-[270px]">
+								<ProductCard {...item} />
+							</div>
 						))}
 				</div>
 			</section>
-			<section className="max-w-[73.125rem] mx-auto px-12 py-10 bg-black mt-[140px] flex flex-col lg:flex-row items-center">
+			<section className="max-w-[73.125rem] mx-auto px-6 md:px-12 py-10 bg-black mt-[140px] flex flex-col gap-y-6 lg:flex-row items-center">
 				<aside className="text-white w-full">
 					<span className="text-secondary font-semibold">Categories</span>
 					<h1 className="text-[clamp(2.5rem,3vw,3rem)] font-semibold max-w-[443px] leading-[60px] my-8">
@@ -174,10 +182,12 @@ export default function Home() {
 					</div>
 					<button className="bg-secondary px-12 py-4 rounded-[4px] mt-10">Buy Now!</button>
 				</aside>
-				<aside className="w-full max-w-[600px] lg:min-w-[600px] h-[420px] flex items-center">
+				<aside className="w-full max-w-[600px] lg:min-w-[600px]  flex items-center">
 					<img src={jbl} alt="Image of JBL" className="w-full" />
 				</aside>
 			</section>
+			<OurProductsSection />
+			<NewArrivalSection />
 		</main>
 	);
 }
@@ -187,7 +197,7 @@ const CategoriesSection = () => {
 	return (
 		<section className="mt-[70px] max-w-[73.125rem] mx-auto flex flex-col">
 			<div className="flex flex-col">
-				<div className="flex items-center gap-6">
+				<div className="flex items-center gap-4">
 					<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
 					<span className="text-primary font-semibold ">Categories</span>
 				</div>
@@ -229,5 +239,106 @@ const CategoriesSection = () => {
 };
 
 const OurProductsSection = () => {
-	return <section></section>;
+	return (
+		<section className="mt-[70px] max-w-[73.125rem] mx-auto flex flex-col">
+			<div className="flex flex-col">
+				<div className="flex items-center gap-4">
+					<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
+					<span className="text-primary font-semibold ">Our Products</span>
+				</div>
+				<div className="flex w-full items-end justify-between mt-6 gap-6  mb-10">
+					<div className="flex items-end mt-6 gap-6">
+						<h2 className="font-semibold text-[clamp(2rem,3vw,2.25rem)] leading-[1.875rem]">
+							Explore Our Products
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-7.5 overflow-auto">
+				{allProducts.slice(0, 8).map((item) => (
+					<MainProductCard key={item.id} {...item} />
+				))}
+			</div>
+			<button
+				type="button"
+				className="flex self-center bg-primary px-12 py-4 rounded-[4px] text-white font-medium mt-[60px]"
+			>
+				View All Products
+			</button>
+		</section>
+	);
+};
+
+const NewArrivalSection = () => {
+	return (
+		<section className="mt-[70px] max-w-[73.125rem] mx-auto flex flex-col">
+			<div className="flex flex-col">
+				<div className="flex items-center gap-4">
+					<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
+					<span className="text-primary font-semibold ">Featured</span>
+				</div>
+				<div className="flex w-full items-end justify-between mt-6 gap-6  mb-10">
+					<div className="flex items-end mt-6 gap-6">
+						<h2 className="font-semibold text-[clamp(2rem,3vw,2.25rem)] leading-[1.875rem]">
+							New Arrival
+						</h2>
+					</div>
+				</div>
+			</div>
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-rows-2 w-full gap-[30px] lg:h-[600px]">
+				<div
+					className="bg-black md:col-span-2 md:row-span-2 bg-no-repeat bg-size-[511px] bg-[center_bottom] text-white p-8 flex h-[600px] lg:h-auto"
+					style={{
+						backgroundImage: `url(${playstation})`,
+					}}
+				>
+					<div className="self-end max-w-[242px]">
+						<h4 className="font-semibold text-[24px]">PlayStation 5</h4>
+						<p className="text-[14px] my-4">
+							Black and White version of the PS5 coming out on sale.
+						</p>
+						<span className="underline underline-offset-2 font-medium">Shop Now</span>
+					</div>
+				</div>
+				<div
+					className="bg-black md:col-span-2 bg-no-repeat lg:bg-size-[432px] bg-[right_bottom] text-white p-8 flex h-[600px] lg:h-auto"
+					style={{
+						backgroundImage: `url(${womenCollection})`,
+					}}
+				>
+					<div className="self-end max-w-[265px]">
+						<h4 className="font-semibold text-[24px]">Women's Collections</h4>
+						<p className="text-[14px] my-4">
+							Featured woman collections that give you another vibe.
+						</p>
+						<span className="underline underline-offset-2 font-medium">Shop Now</span>
+					</div>
+				</div>
+				<div
+					className="bg-black bg-no-repeat bg-size-[300px] lg:bg-size-[210px] bg-[center_center] text-white p-8 flex h-[600px] lg:h-auto"
+					style={{
+						backgroundImage: `url(${speakers})`,
+					}}
+				>
+					<div className="self-end max-w-[242px]">
+						<h4 className="font-semibold text-[24px]">Speakers</h4>
+						<p className="text-[14px] my-2">Amazon wireless speakers</p>
+						<span className="underline underline-offset-2 font-medium">Shop Now</span>
+					</div>
+				</div>
+				<div
+					className="bg-black bg-no-repeat bg-size-[300px] lg:bg-size-[210px] bg-[center_center] text-white p-8 flex h-[600px] lg:h-auto"
+					style={{
+						backgroundImage: `url(${perfume})`,
+					}}
+				>
+					<div className="self-end max-w-[242px]">
+						<h4 className="font-semibold text-[24px]">Perfume</h4>
+						<p className="text-[14px] my-2">GUCCI INTENSE OUD EDP</p>
+						<span className="underline underline-offset-2 font-medium">Shop Now</span>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
 };
