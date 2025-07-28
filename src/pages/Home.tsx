@@ -9,7 +9,7 @@ import allProducts from "../lib/data.json";
 import ProductCard, { MainProductCard } from "../components/ProductCard";
 import { useState } from "react";
 import { categories, cn } from "../lib/utils";
-import { AppleLogo } from "../assets/Icons";
+import { AppleLogo, CustomerServiceIcon, DeliveryIcon, MoneybackIcon } from "../assets/Icons";
 
 export default function Home() {
 	return (
@@ -188,6 +188,7 @@ export default function Home() {
 			</section>
 			<OurProductsSection />
 			<NewArrivalSection />
+			<FeatureSection />
 		</main>
 	);
 }
@@ -286,13 +287,9 @@ const NewArrivalSection = () => {
 				</div>
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-rows-2 w-full gap-[30px] lg:h-[600px]">
-				<div
-					className="bg-black md:col-span-2 md:row-span-2 bg-no-repeat bg-size-[511px] bg-[center_bottom] text-white p-8 flex h-[600px] lg:h-auto"
-					style={{
-						backgroundImage: `url(${playstation})`,
-					}}
-				>
-					<div className="self-end max-w-[242px]">
+				<div className="bg-black md:col-span-2 md:row-span-2  text-white p-8 flex h-[600px] lg:h-auto relative overflow-hidden">
+					<img src={playstation} className="absolute left-1/2 bottom-0 -translate-x-1/2 w-full" />
+					<div className="self-end max-w-[242px] z-[10]">
 						<h4 className="font-semibold text-[24px]">PlayStation 5</h4>
 						<p className="text-[14px] my-4">
 							Black and White version of the PS5 coming out on sale.
@@ -314,25 +311,23 @@ const NewArrivalSection = () => {
 						<span className="underline underline-offset-2 font-medium">Shop Now</span>
 					</div>
 				</div>
-				<div
-					className="bg-black bg-no-repeat bg-size-[300px] lg:bg-size-[210px] bg-[center_center] text-white p-8 flex h-[600px] lg:h-auto"
-					style={{
-						backgroundImage: `url(${speakers})`,
-					}}
-				>
-					<div className="self-end max-w-[242px]">
+				<div className="bg-black  text-white p-8 flex h-[600px] lg:h-auto relative">
+					<img
+						src={speakers}
+						className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[300px] lg:max-w-[210px]"
+					/>
+					<div className="self-end max-w-[242px] z-[10]">
 						<h4 className="font-semibold text-[24px]">Speakers</h4>
 						<p className="text-[14px] my-2">Amazon wireless speakers</p>
 						<span className="underline underline-offset-2 font-medium">Shop Now</span>
 					</div>
 				</div>
-				<div
-					className="bg-black bg-no-repeat bg-size-[300px] lg:bg-size-[210px] bg-[center_center] text-white p-8 flex h-[600px] lg:h-auto"
-					style={{
-						backgroundImage: `url(${perfume})`,
-					}}
-				>
-					<div className="self-end max-w-[242px]">
+				<div className="bg-black  text-white p-8 flex h-[600px] lg:h-auto relative">
+					<img
+						src={perfume}
+						className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[300px] lg:max-w-[210px]"
+					/>
+					<div className="self-end max-w-[242px] z-[10]">
 						<h4 className="font-semibold text-[24px]">Perfume</h4>
 						<p className="text-[14px] my-2">GUCCI INTENSE OUD EDP</p>
 						<span className="underline underline-offset-2 font-medium">Shop Now</span>
@@ -342,3 +337,41 @@ const NewArrivalSection = () => {
 		</section>
 	);
 };
+
+const FeatureSection = () => {
+	return (
+		<section className="my-[70px] max-w-[73.125rem] mx-auto flex flex-col items-center md:my-[140px]">
+			<div className="flex items-center justify-center flex-wrap gap-[88px]">
+				{features.map(({ heading, subheading, icon: Icon }, i) => (
+					<div key={i} className="flex flex-col text-center items-center">
+						<span className="size-14.5 text-white bg-black flex items-center justify-center rounded-full shadow-[0px_0px_0px_12px_rgba(0,0,0,0.2)]">
+							<Icon />
+						</span>
+						<div className="mt-8">
+							<h4 className="mb-2 font-semibold text-[20px]">{heading}</h4>
+							<p className="text-[14px]">{subheading}</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+	);
+};
+
+const features = [
+	{
+		heading: "FREE AND FAST DELIVERY",
+		subheading: "Free delivery for all orders over $140",
+		icon: DeliveryIcon,
+	},
+	{
+		heading: "24/7 CUSTOMER SERVICE",
+		subheading: "Friendly 24/7 customer support",
+		icon: CustomerServiceIcon,
+	},
+	{
+		heading: "MONEY BACK GUARANTEE",
+		subheading: "We reurn money within 30 days",
+		icon: MoneybackIcon,
+	},
+];
