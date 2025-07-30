@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUp, ChevronRight } from "lucide-react";
 import jbl from "../assets/home/jbl.png";
 import playstation from "../assets/home/playstation.png";
 import womenCollection from "../assets/home/women-collection.png";
@@ -189,6 +189,14 @@ export default function Home() {
 			<OurProductsSection />
 			<NewArrivalSection />
 			<FeatureSection />
+			<section className="max-w-[73.125rem] mx-auto flex flex-col gap-y-6 relative h-[46px] mb-8">
+				<button
+					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+					className="flex size-[46px] rounded-full bg-gray-100 items-center justify-center absolute right-0 translate-x-[100%]"
+				>
+					<ArrowUp />
+				</button>
+			</section>
 		</main>
 	);
 }

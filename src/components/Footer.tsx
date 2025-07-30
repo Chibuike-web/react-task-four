@@ -1,4 +1,4 @@
-import { SendHorizonal } from "lucide-react";
+import { Copyright, SendHorizonal } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "../lib/utils";
 import qrCode from "../assets/footer/qr-code.png";
@@ -57,6 +57,12 @@ export default function Footer() {
 						<LinkedinIcon />
 					</div>
 				</div>
+			</div>
+
+			<div className="text-white/25 border-t border-white/25 pt-4  flex items-center justify-center text-center mt-15">
+				<p className="flex items-center gap-2">
+					<Copyright /> <span>Copyright Rimel 2022. All right reserved</span>
+				</p>
 			</div>
 		</footer>
 	);

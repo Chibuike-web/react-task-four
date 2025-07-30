@@ -1,12 +1,16 @@
-import { NavLink, useMatch } from "react-router";
+import { NavLink, useLocation, useMatch } from "react-router";
 import { Heart, ShoppingCart, Search, ChevronDown, Menu, X } from "lucide-react";
 import { useCallback, useState } from "react";
+import { cn } from "../lib/utils";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
+	const { pathname } = useLocation();
 	const handleToggle = useCallback(() => {
 		setIsOpen((prev) => !prev);
 	}, []);
+
+	const isExist = ["/signup", "/login"].includes(pathname);
 	return (
 		<section>
 			{!isOpen && (
@@ -21,7 +25,7 @@ export default function Navbar() {
 				</div>
 			)}
 
-			<nav className="px-4 xl:px-0 shadow-[0_0.125rem_0_rgba(0,0,0,0.1)] h-[5.875rem] flex items-center justify-center">
+			<nav className="px-4 xl:px-0 shadow-[0_0.125rem_0_rgba(0,0,0,0.1)] h-[5.875rem] flex items-center ">
 				<header className="max-w-[73.125rem] w-full justify-between mx-auto flex items-center">
 					<span className="font-bold text-[clamp(1.2rem,2.5vw,1.5rem)]">Exclusive</span>
 
@@ -43,16 +47,17 @@ export default function Navbar() {
 						})}
 					</ul>
 
-					<div className="flex items-center gap-8">
+					<div className={cn("flex items-center", !isExist ? "gap-8" : "gap-0")}>
 						<Searchbar />
-						<div className="flex items-center gap-4">
-							<Heart className="size-[clamp(1.5rem,2vw,2rem)]" />
-							<ShoppingCart className="size-[clamp(1.5rem,2vw,2rem)]" />
-
-							<button onClick={handleToggle}>
-								{isOpen ? <X /> : <Menu className="size-[clamp(1.5rem,2vw,2rem)] lg:hidden" />}
-							</button>
-						</div>
+						{!isExist && (
+							<div className="flex items-center gap-4">
+								<Heart className="size-[clamp(1.5rem,2vw,2rem)]" />
+								<ShoppingCart className="size-[clamp(1.5rem,2vw,2rem)]" />
+							</div>
+						)}
+						<button onClick={handleToggle}>
+							{isOpen ? <X /> : <Menu className="size-[clamp(1.5rem,2vw,2rem)] lg:hidden" />}
+						</button>
 					</div>
 				</header>
 			</nav>
@@ -82,7 +87,7 @@ const navLinks = [
 
 const Searchbar = () => {
 	return (
-		<div className="relative hidden lg:block">
+		<div className="relative hidden lg:block w-full">
 			<input
 				type="text"
 				name="search"
