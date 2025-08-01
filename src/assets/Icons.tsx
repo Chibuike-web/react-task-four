@@ -354,7 +354,7 @@ export function GamingIcon() {
 export function DeliveryIcon() {
 	return (
 		<svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<g clip-path="url(#clip0_5876_335)">
+			<g clipPath="url(#clip0_5876_335)">
 				<path
 					d="M12.1667 31.6667C14.0076 31.6667 15.5 30.1743 15.5 28.3333C15.5 26.4924 14.0076 25 12.1667 25C10.3257 25 8.83334 26.4924 8.83334 28.3333C8.83334 30.1743 10.3257 31.6667 12.1667 31.6667Z"
 					stroke="currentColor"
@@ -417,7 +417,7 @@ export function DeliveryIcon() {
 export function CustomerServiceIcon() {
 	return (
 		<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<g clip-path="url(#clip0_5876_352)">
+			<g clipPath="url(#clip0_5876_352)">
 				<path
 					d="M13.3334 24.9998C13.3334 23.1589 11.841 21.6665 10 21.6665C8.15907 21.6665 6.66669 23.1589 6.66669 24.9998V28.3332C6.66669 30.1741 8.15907 31.6665 10 31.6665C11.841 31.6665 13.3334 30.1741 13.3334 28.3332V24.9998Z"
 					stroke="currentColor"
@@ -476,7 +476,7 @@ export function MoneybackIcon() {
 export function GoogleLogo() {
 	return (
 		<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<g clip-path="url(#clip0_5886_3336)">
+			<g clipPath="url(#clip0_5886_3336)">
 				<path
 					d="M23.766 12.7764C23.766 11.9607 23.6999 11.1406 23.5588 10.3381H12.24V14.9591H18.7217C18.4528 16.4494 17.5885 17.7678 16.323 18.6056V21.6039H20.19C22.4608 19.5139 23.766 16.4274 23.766 12.7764Z"
 					fill="#4285F4"

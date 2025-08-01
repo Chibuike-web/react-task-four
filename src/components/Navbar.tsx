@@ -12,7 +12,7 @@ export default function Navbar() {
 
 	const isExist = ["/signup", "/login"].includes(pathname);
 	return (
-		<section>
+		<header>
 			{!isOpen && (
 				<div className="bg-black w-full flex items-center text-white px-4 xl:px-0">
 					<div className="flex gap-4 justify-between xl:gap-[14.4375rem] py-2 max-w-[73.125rem] w-full mx-auto items-center xl:justify-end relative">
@@ -26,7 +26,7 @@ export default function Navbar() {
 			)}
 
 			<nav className="px-4 xl:px-0 shadow-[0_0.125rem_0_rgba(0,0,0,0.1)] h-[5.875rem] flex items-center ">
-				<header className="max-w-[73.125rem] w-full justify-between mx-auto flex items-center">
+				<div className="max-w-[73.125rem] w-full justify-between mx-auto flex items-center">
 					<span className="font-bold text-[clamp(1.2rem,2.5vw,1.5rem)]">Exclusive</span>
 
 					<ul className="hidden lg:flex items-center gap-12">
@@ -59,10 +59,10 @@ export default function Navbar() {
 							{isOpen ? <X /> : <Menu className="size-[clamp(1.5rem,2vw,2rem)] lg:hidden" />}
 						</button>
 					</div>
-				</header>
+				</div>
 			</nav>
 			<MobileNav isOpen={isOpen} handleToggle={handleToggle} />
-		</section>
+		</header>
 	);
 }
 
@@ -135,7 +135,7 @@ type MobileNavType = {
 const MobileNav = ({ isOpen, handleToggle }: MobileNavType) => {
 	if (!isOpen) return null;
 	return (
-		<div className="bg-white fixed top-[94px] inset-0">
+		<nav className="bg-white fixed top-[94px] inset-0">
 			<ul className="flex flex-col items-start gap-12 px-4 mt-12">
 				{navLinks.map((item) => {
 					const to = item.id === "home" ? "/" : `/${item.id}`;
@@ -154,6 +154,6 @@ const MobileNav = ({ isOpen, handleToggle }: MobileNavType) => {
 					);
 				})}
 			</ul>
-		</div>
+		</nav>
 	);
 };

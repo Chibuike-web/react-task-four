@@ -47,9 +47,9 @@ export default function Home() {
 							</span>
 						</div>
 					</div>
-					<figure className="w-full max-w-[496px]">
+					<div className="w-full max-w-[496px]">
 						<img src={heroImage} alt="" className="w-full " width={496} height={352} />
-					</figure>
+					</div>
 				</div>
 			</section>
 			<section className=" max-w-[73.125rem] mx-auto flex flex-col mt-[70px]">
@@ -156,7 +156,7 @@ export default function Home() {
 				</div>
 			</section>
 			<section className="max-w-[73.125rem] mx-auto px-6 md:px-12 py-10 bg-black mt-[140px] flex flex-col gap-y-6 lg:flex-row items-center">
-				<aside className="text-white w-full">
+				<div className="text-white w-full">
 					<span className="text-secondary font-semibold">Categories</span>
 					<h1 className="text-[clamp(2.5rem,3vw,3rem)] font-semibold max-w-[443px] leading-[60px] my-8">
 						Enhance Your Music Experience
@@ -181,10 +181,10 @@ export default function Home() {
 						</div>
 					</div>
 					<button className="bg-secondary px-12 py-4 rounded-[4px] mt-10">Buy Now!</button>
-				</aside>
-				<aside className="w-full max-w-[600px] lg:min-w-[600px]  flex items-center">
+				</div>
+				<div className="w-full max-w-[600px] lg:min-w-[600px]  flex items-center">
 					<img src={jbl} alt="Image of JBL" className="w-full" />
-				</aside>
+				</div>
 			</section>
 			<OurProductsSection />
 			<NewArrivalSection />
