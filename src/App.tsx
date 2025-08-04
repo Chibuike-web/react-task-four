@@ -5,6 +5,7 @@ import RouteLayout from "./RouteLayout";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Wishlist from "./pages/Wishlist";
 
 const router = createBrowserRouter([
 	{
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
 			{ path: "about", element: <About /> },
 			{ path: "signup", element: <Signup /> },
 			{ path: "login", element: <Login /> },
+			{ path: "wishlist", element: <Wishlist /> },
 			{ path: "*", element: <NotFound /> },
 		],
 	},

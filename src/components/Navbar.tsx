@@ -1,14 +1,20 @@
-import { NavLink, useLocation, useMatch } from "react-router";
+import { Link, NavLink, useLocation, useMatch } from "react-router";
 import { Heart, ShoppingCart, Search, ChevronDown, Menu, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ComponentType } from "react";
 import { cn } from "../lib/utils";
+import { CancelIcon, LogoutIcon, OrderIcon, ProfileIcon, StarIcon } from "../assets/Icons";
+import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "react-redux";
+import type { RootState } from "../lib/store/store";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [signIn, setSignedIn] = useState("");
+	const [profile, setProfile] = useState(false);
 	const { pathname } = useLocation();
 	const handleToggle = useCallback(() => {
 		setIsOpen((prev) => !prev);
+		setProfile(false);
 	}, []);
 
 	useEffect(() => {
@@ -17,6 +23,19 @@ export default function Navbar() {
 		const user = JSON.parse(storedUser);
 		setSignedIn(user.email);
 	}, []);
+
+	useEffect(() => {
+		const profileDropdown = (e: MouseEvent) => {
+			if (!(e.target instanceof HTMLElement)) return;
+			if (!e.target.classList.contains("profile-btn")) {
+				setProfile(false);
+			}
+		};
+		document.body.addEventListener("click", profileDropdown);
+		return () => {
+			document.body.removeEventListener("click", profileDropdown);
+		};
+	}, [profile]);
 
 	const isExist = ["/signup", "/login"].includes(pathname);
 	const navLinks = [
@@ -38,8 +57,10 @@ export default function Navbar() {
 		},
 	].filter((link) => !(link.id === "signup" && signIn));
 
+	const wishlist = useSelector((state: RootState) => state.wishlist.items);
+
 	return (
-		<header>
+		<header className="relative z-[1000]">
 			{!isOpen && (
 				<div className="bg-black w-full flex items-center text-white px-4 xl:px-0">
 					<div className="flex gap-4 justify-between xl:gap-[14.4375rem] py-2 max-w-[73.125rem] w-full mx-auto items-center xl:justify-end relative">
@@ -51,7 +72,6 @@ export default function Navbar() {
 					</div>
 				</div>
 			)}
-
 			<nav className="px-4 xl:px-0 shadow-[0_0.125rem_0_rgba(0,0,0,0.1)] h-[5.875rem] flex items-center ">
 				<div className="max-w-[73.125rem] w-full justify-between mx-auto flex items-center">
 					<span className="font-bold text-[clamp(1.2rem,2.5vw,1.5rem)]">Exclusive</span>
@@ -77,9 +97,50 @@ export default function Navbar() {
 					<div className={cn("flex items-center", !isExist ? "gap-8" : "gap-0")}>
 						<Searchbar />
 						{!isExist && (
-							<div className="flex items-center gap-4">
-								<Heart className="size-[clamp(1.5rem,2vw,2rem)]" />
-								<ShoppingCart className="size-[clamp(1.5rem,2vw,2rem)]" />
+							<div className="flex items-center gap-4 relative">
+								<Link to="/wishlist" className="relative">
+									{wishlist.length > 0 && (
+										<span className="absolute bg-primary text-white text-[10px] rounded-full size-3 right-0 top-0 flex items-center justify-center">
+											{wishlist.length}
+										</span>
+									)}
+									<Heart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
+								</Link>
+								<ShoppingCart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
+								{signIn && (
+									<button
+										onClick={() => setProfile((prev) => !prev)}
+										className={cn(
+											"profile-btn size-[2rem] rounded-full flex items-center justify-center",
+											profile && "text-white bg-primary"
+										)}
+									>
+										<ProfileIcon className="size-[1.5rem]" strokeWidth="2" />
+									</button>
+								)}
+
+								{profile && (
+									<ul className="absolute right-0 top-[38px] w-[225px] rounded-[8px] text-white flex flex-col gap-6 p-4 text-[14px] bg-black/40 backdrop-blur-sm">
+										{profileItem.map(({ id, link, label, icon: Icon }) => (
+											<Link
+												key={id}
+												to={`${link}`}
+												className="flex items-center gap-2 cursor-pointer"
+											>
+												<span>
+													<Icon className="size-[1.5rem]" />
+												</span>
+												<span> {label}</span>
+											</Link>
+										))}
+										<li className="flex items-center gap-2 cursor-pointer">
+											<span>
+												<LogoutIcon />
+											</span>
+											<span>Logout</span>
+										</li>
+									</ul>
+								)}
 							</div>
 						)}
 						<button onClick={handleToggle}>
@@ -88,10 +149,44 @@ export default function Navbar() {
 					</div>
 				</div>
 			</nav>
-			<MobileNav isOpen={isOpen} handleToggle={handleToggle} navLinks={navLinks} />
+			{isOpen && <MobileNav isOpen={isOpen} handleToggle={handleToggle} navLinks={navLinks} />}{" "}
 		</header>
 	);
 }
+
+export type ProfileItem = {
+	id: string;
+	label: string;
+	link: string;
+	icon: ComponentType<any>;
+};
+
+const profileItem: ProfileItem[] = [
+	{
+		id: uuidv4(),
+		label: "Manage My Account",
+		link: "/account",
+		icon: ProfileIcon,
+	},
+	{
+		id: uuidv4(),
+		label: "My Order",
+		link: "/account?orders=returns",
+		icon: OrderIcon,
+	},
+	{
+		id: uuidv4(),
+		label: "My Cancellations",
+		link: "/account",
+		icon: CancelIcon,
+	},
+	{
+		id: uuidv4(),
+		label: "My Reviews",
+		link: "/reviews",
+		icon: StarIcon,
+	},
+];
 
 const Searchbar = () => {
 	return (
@@ -142,11 +237,13 @@ type MobileNavType = {
 };
 
 const MobileNav = ({ isOpen, handleToggle, navLinks }: MobileNavType) => {
-	if (!isOpen) return null;
-
 	useEffect(() => {
 		if (isOpen) {
 			document.body.style.overflow = "hidden";
+			console.log(isOpen);
+		} else {
+			document.body.style.overflow = "";
+			console.log(isOpen);
 		}
 		return () => {
 			document.body.style.overflow = "";
@@ -154,7 +251,7 @@ const MobileNav = ({ isOpen, handleToggle, navLinks }: MobileNavType) => {
 	}, [isOpen]);
 
 	return (
-		<nav className="bg-white fixed top-[94px] inset-0">
+		<nav className="bg-white fixed top-[94px] z-[1000] inset-0">
 			<ul className="flex flex-col items-start gap-12 px-4 mt-12">
 				{navLinks.map((item) => {
 					const to = item.id === "home" ? "/" : `/${item.id}`;

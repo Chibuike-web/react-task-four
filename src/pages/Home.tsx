@@ -263,7 +263,7 @@ const OurProductsSection = () => {
 					</div>
 				</div>
 			</div>
-			<div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-7.5 overflow-auto">
+			<div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-7.5 overflow-auto">
 				{allProducts.slice(0, 8).map((item) => (
 					<MainProductCard key={item.id} {...item} />
 				))}

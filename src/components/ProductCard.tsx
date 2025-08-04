@@ -4,6 +4,9 @@ import { cn, getStarRating } from "../lib/utils";
 import type { Colors, Product } from "../lib/types";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../lib/store/store";
+import { addToWishlist, removeFromWishlist } from "../lib/store/wishlistSlice";
 
 export default function ProductCard({
 	id,
@@ -20,17 +23,35 @@ export default function ProductCard({
 	const discountPrice = discountRate && Math.round(price * (1 - discountRate));
 	const [hoverId, setHoverId] = useState("");
 
+	const dispatch = useDispatch();
+	const wishlist = useSelector((state: RootState) => state.wishlist.items);
+	const isWishlisted = wishlist.some((item) => item.id === id);
+
+	const toggleWishlist = () => {
+		if (isWishlisted) {
+			dispatch(removeFromWishlist(id));
+		} else {
+			dispatch(addToWishlist({ id, image, name, price, rating, reviews, tags }));
+		}
+	};
+
 	return (
 		<article className="relative w-full">
 			{tags?.includes("Flash Sales") && (
-				<span className="absolute left-[12px] top-[12px] bg-primary w-[55px] h-[26px] rounded-[4px] flex items-center justify-center text-white text-[12px] font-normal">
+				<span className="absolute z-[100] left-[12px] top-[12px] bg-primary w-[55px] h-[26px] rounded-[4px] flex items-center justify-center text-white text-[12px] font-normal">
 					-{discount}%
 				</span>
 			)}
 			<div className="absolute top-[12px] right-[12px] flex flex-col z-[100] gap-2">
-				<span className="flex items-center justify-center bg-white rounded-full size-[34px]">
+				<button
+					onClick={toggleWishlist}
+					className={cn(
+						"flex items-center justify-center bg-white rounded-full size-[34px]",
+						isWishlisted && "text-primary"
+					)}
+				>
 					<Heart />
-				</span>
+				</button>
 				<span className="flex items-center justify-center bg-white rounded-full size-[34px]">
 					<Eye />
 				</span>
@@ -112,6 +133,18 @@ export function MainProductCard({
 	const { full, half, empty } = getStarRating(rating);
 	const [hoverId, setHoverId] = useState("");
 
+	const dispatch = useDispatch();
+	const wishlist = useSelector((state: RootState) => state.wishlist.items);
+	const isWishlisted = wishlist.some((item) => item.id === id);
+
+	const toggleWishlist = () => {
+		if (isWishlisted) {
+			dispatch(removeFromWishlist(id));
+		} else {
+			dispatch(addToWishlist({ id, image, name, price, rating, reviews, tags, colors }));
+		}
+	};
+
 	return (
 		<article className="relative w-full">
 			{tags?.includes("New") && (
@@ -120,9 +153,15 @@ export function MainProductCard({
 				</span>
 			)}
 			<div className="absolute top-[12px] right-[12px] flex flex-col gap-2 z-[100]">
-				<span className="flex items-center justify-center bg-white rounded-full size-[34px]">
+				<button
+					onClick={toggleWishlist}
+					className={cn(
+						"flex items-center justify-center bg-white rounded-full size-[34px]",
+						isWishlisted && "bg-primary text-white"
+					)}
+				>
 					<Heart />
-				</span>
+				</button>
 				<span className="flex items-center justify-center bg-white rounded-full size-[34px]">
 					<Eye />
 				</span>
