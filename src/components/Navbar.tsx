@@ -1,16 +1,43 @@
 import { NavLink, useLocation, useMatch } from "react-router";
 import { Heart, ShoppingCart, Search, ChevronDown, Menu, X } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [signIn, setSignedIn] = useState("");
 	const { pathname } = useLocation();
 	const handleToggle = useCallback(() => {
 		setIsOpen((prev) => !prev);
 	}, []);
 
+	useEffect(() => {
+		const storedUser = localStorage.getItem("user");
+		if (!storedUser) return;
+		const user = JSON.parse(storedUser);
+		setSignedIn(user.email);
+	}, []);
+
 	const isExist = ["/signup", "/login"].includes(pathname);
+	const navLinks = [
+		{
+			id: "home",
+			label: "Home",
+		},
+		{
+			id: "contact",
+			label: "Contact",
+		},
+		{
+			id: "about",
+			label: "About",
+		},
+		{
+			id: "signup",
+			label: "Sign Up",
+		},
+	].filter((link) => !(link.id === "signup" && signIn));
+
 	return (
 		<header>
 			{!isOpen && (
@@ -61,29 +88,10 @@ export default function Navbar() {
 					</div>
 				</div>
 			</nav>
-			<MobileNav isOpen={isOpen} handleToggle={handleToggle} />
+			<MobileNav isOpen={isOpen} handleToggle={handleToggle} navLinks={navLinks} />
 		</header>
 	);
 }
-
-const navLinks = [
-	{
-		id: "home",
-		label: "Home",
-	},
-	{
-		id: "contact",
-		label: "Contact",
-	},
-	{
-		id: "about",
-		label: "About",
-	},
-	{
-		id: "signup",
-		label: "Sign Up",
-	},
-];
 
 const Searchbar = () => {
 	return (
@@ -130,10 +138,21 @@ const Select = () => {
 type MobileNavType = {
 	isOpen: boolean;
 	handleToggle: () => void;
+	navLinks: { id: string; label: string }[];
 };
 
-const MobileNav = ({ isOpen, handleToggle }: MobileNavType) => {
+const MobileNav = ({ isOpen, handleToggle, navLinks }: MobileNavType) => {
 	if (!isOpen) return null;
+
+	useEffect(() => {
+		if (isOpen) {
+			document.body.style.overflow = "hidden";
+		}
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [isOpen]);
+
 	return (
 		<nav className="bg-white fixed top-[94px] inset-0">
 			<ul className="flex flex-col items-start gap-12 px-4 mt-12">

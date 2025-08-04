@@ -31,8 +31,11 @@ export default function Login() {
 			}
 			reset();
 			navigate("/");
+			const user = {
+				email,
+			};
+			localStorage.setItem("user", JSON.stringify(user));
 		} catch (err) {
-			console.error("Full Firebase error:", err);
 			if (typeof err === "object" && err !== null && "code" in err) {
 				const errorCode = (err as { code: string }).code;
 				if (errorCode === "auth/invalid-credential") {
