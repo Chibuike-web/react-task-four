@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../lib/store/store";
 import { addToWishlist, removeFromWishlist } from "../lib/store/wishlistSlice";
+import { addToCart } from "../lib/store/cartItemSlice";
 
 export default function ProductCard({
 	id,
@@ -24,8 +25,22 @@ export default function ProductCard({
 	const [hoverId, setHoverId] = useState("");
 
 	const dispatch = useDispatch();
+	const cartItem = useSelector((state: RootState) => state.cartItem.items);
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
 	const isWishlisted = wishlist.some((item) => item.id === id);
+	const isAlreadyInCart = cartItem.some((item) => item.id === id);
+
+	const handleAddToCart = () => {
+		dispatch(
+			addToCart({
+				id,
+				image,
+				price,
+				name,
+				quantity: 1,
+			})
+		);
+	};
 
 	const toggleWishlist = () => {
 		if (isWishlisted) {
@@ -56,23 +71,34 @@ export default function ProductCard({
 					<Eye />
 				</span>
 			</div>
-			<Link to={`/${id}`} onMouseEnter={() => setHoverId(id)} onMouseLeave={() => setHoverId("")}>
-				<figure className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden">
+			<Link to={`/${id}`}>
+				<div
+					className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden "
+					onMouseEnter={() => setHoverId(id)}
+					onMouseLeave={() => setHoverId("")}
+				>
 					<img src={image} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>
 						{hoverId === id && (
 							<motion.button
+								disabled={isAlreadyInCart}
 								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
+								animate={{ opacity: isAlreadyInCart ? 0.5 : 1, y: 0 }}
 								transition={{ duration: 0.2 }}
 								exit={{ opacity: 0, y: 20 }}
-								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10"
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									handleAddToCart();
+									console.log("click");
+								}}
+								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								Add to Cart
+								{isAlreadyInCart ? "Already in the Cart" : "Add to Cart"}
 							</motion.button>
 						)}
 					</AnimatePresence>
-				</figure>
+				</div>
 				<div>
 					<p className="font-medium mt-4 mb-2">{name}</p>
 					<p className="flex gap-3 items-center mb-2">
@@ -134,8 +160,21 @@ export function MainProductCard({
 	const [hoverId, setHoverId] = useState("");
 
 	const dispatch = useDispatch();
+	const cartItem = useSelector((state: RootState) => state.cartItem.items);
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
 	const isWishlisted = wishlist.some((item) => item.id === id);
+	const isAlreadyInCart = cartItem.some((item) => item.id === id);
+	const handleAddToCart = () => {
+		dispatch(
+			addToCart({
+				id,
+				image,
+				price,
+				name,
+				quantity: 1,
+			})
+		);
+	};
 
 	const toggleWishlist = () => {
 		if (isWishlisted) {
@@ -157,7 +196,7 @@ export function MainProductCard({
 					onClick={toggleWishlist}
 					className={cn(
 						"flex items-center justify-center bg-white rounded-full size-[34px]",
-						isWishlisted && "bg-primary text-white"
+						isWishlisted && "text-primary"
 					)}
 				>
 					<Heart />
@@ -167,22 +206,28 @@ export function MainProductCard({
 				</span>
 			</div>
 			<Link to={`/${id}`} onMouseEnter={() => setHoverId(id)} onMouseLeave={() => setHoverId("")}>
-				<figure className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden">
+				<div className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden ">
 					<img src={image} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>
 						{hoverId === id && (
 							<motion.button
 								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
+								animate={{ opacity: isAlreadyInCart ? 0.5 : 1, y: 0 }}
 								transition={{ duration: 0.2 }}
 								exit={{ opacity: 0, y: 20 }}
-								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10"
+								disabled={isAlreadyInCart}
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									handleAddToCart();
+								}}
+								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								Add to Cart
+								{isAlreadyInCart ? "Already in the Cart" : "Add to Cart"}
 							</motion.button>
 						)}
 					</AnimatePresence>
-				</figure>
+				</div>
 				<div className="flex flex-col gap-2">
 					<p className="font-medium mt-4 mb-2">{name}</p>
 

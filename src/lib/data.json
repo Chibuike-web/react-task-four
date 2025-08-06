@@ -99,7 +99,7 @@
 		"price": 1160,
 		"discount": 35,
 		"rating": 3,
-		"tags": ["Flash Sales"],
+		"tags": ["Flash Sales", "Just For You"],
 		"reviews": 75
 	},
 	{
@@ -109,7 +109,7 @@
 		"price": 370,
 		"discount": 30,
 		"rating": 5,
-		"tags": ["Flash Sales"],
+		"tags": ["Flash Sales", "Just For You"],
 		"reviews": 99
 	},
 	{
@@ -129,7 +129,7 @@
 		"price": 120,
 		"discount": 40,
 		"rating": 4.5,
-		"tags": ["Flash Sales"],
+		"tags": ["Flash Sales", "Just For You"],
 		"reviews": 88
 	},
 	{

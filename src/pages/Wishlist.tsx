@@ -7,21 +7,51 @@ import { AnimatePresence, motion } from "motion/react";
 import { Link } from "react-router";
 import { useState } from "react";
 import type { Product } from "../lib/types";
+import allProducts from "../lib/data.json";
+import ProductCard, { MainProductCard } from "../components/ProductCard";
 
 export default function Wishlist() {
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
 	return (
-		<section className="max-w-[73.125rem] mx-auto pt-[60px] pb-[140px] px-6 xl:px-0">
-			<div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-7.5">
-				{wishlist.map((item) => (
-					<ProductCard key={item.id} {...item} />
-				))}
-			</div>
-		</section>
+		<main className="max-w-[73.125rem] mx-auto pt-[60px] pb-[140px] px-6 xl:px-0">
+			<section className="mb-20">
+				<div className="flex items-center justify-between w-full mb-[4rem]">
+					<p>Wishlist ({wishlist.length})</p>
+
+					<button className="border border-black/50 px-4 py-2 md:px-12 md:py-4 rounded-[4px]">
+						Move All To Bag
+					</button>
+				</div>
+				<div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-7.5">
+					{wishlist.map((item) => (
+						<WishlistProductCard key={item.id} {...item} />
+					))}
+				</div>
+			</section>
+
+			<section>
+				<div className="flex items-center justify-between w-full mb-[4rem]">
+					<div className="flex items-center gap-4">
+						<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
+						<span className="text-primary font-semibold ">Just For You</span>
+					</div>
+					<button className="border border-black/50 px-4 py-2 md:px-12 md:py-4 rounded-[4px]">
+						See All
+					</button>
+				</div>
+				<div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-7.5">
+					{allProducts
+						.filter((item) => item.tags?.includes("Just For You"))
+						.map((i) => (
+							<ProductCard key={i.id} {...i} />
+						))}
+				</div>
+			</section>
+		</main>
 	);
 }
 
-function ProductCard({ id, image, discount, name, price, rating, reviews, tags }: Product) {
+function WishlistProductCard({ id, image, discount, name, price, rating, reviews, tags }: Product) {
 	const discountRate = discount && discount / 100;
 	const discountPrice = discountRate && Math.round(price * (1 - discountRate));
 	const [hoverId, setHoverId] = useState("");
@@ -55,7 +85,7 @@ function ProductCard({ id, image, discount, name, price, rating, reviews, tags }
 				</button>
 			</div>
 			<Link to={`/${id}`} onMouseEnter={() => setHoverId(id)} onMouseLeave={() => setHoverId("")}>
-				<figure className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden">
+				<div className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden">
 					<img src={image} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>
 						{hoverId === id && (
@@ -64,13 +94,18 @@ function ProductCard({ id, image, discount, name, price, rating, reviews, tags }
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.2 }}
 								exit={{ opacity: 0, y: 20 }}
-								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10"
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
+									console.log("Add to cart");
+								}}
+								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer"
 							>
 								Add to Cart
 							</motion.button>
 						)}
 					</AnimatePresence>
-				</figure>
+				</div>
 				<div>
 					<p className="font-medium mt-4 mb-2">{name}</p>
 					<p className="flex gap-3 items-center mb-2">

@@ -60,9 +60,12 @@ export default function Footer() {
 			</div>
 
 			<div className="text-white/25 border-t border-white/25 pt-4  flex items-center justify-center text-center mt-15">
-				<p className="flex items-center gap-2">
-					<Copyright /> <span>Copyright Rimel 2022. All right reserved</span>
-				</p>
+				<div className="flex items-center gap-2 ">
+					<Copyright />{" "}
+					<p className="text-[clamp(0.5rem,1.5vw+1.5vh,1.125rem)] text-left">
+						Copyright Rimel 2022. All rights reserved
+					</p>
+				</div>
 			</div>
 		</footer>
 	);

@@ -15,3 +15,11 @@ export type Colors = {
 	label: string;
 	colorCode: string;
 };
+
+export type CartItemType = {
+	id: string;
+	image: string;
+	price: number;
+	name: string;
+	quantity: number;
+};
