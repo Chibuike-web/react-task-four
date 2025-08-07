@@ -46,9 +46,9 @@ export default function Cart() {
 						name="couponCode"
 						id="couponCode"
 						placeholder="Coupon Code"
-						className="border border-black/50 px-4 w-full max-w-[300px] rounded-[4px] py-2 md:py-4"
+						className="border border-black/50 px-4 w-[300px] rounded-[4px] py-2 md:py-4"
 					/>
-					<button className="bg-primary text-white px-4 py-2 md:px-12 md:py-4 rounded-[4px]">
+					<button className="bg-primary text-white px-4 py-2 md:px-12 md:py-4 rounded-[4px] flex-shrink-0">
 						Apply Coupon
 					</button>
 				</div>
