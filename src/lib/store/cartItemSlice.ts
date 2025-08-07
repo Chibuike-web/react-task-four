@@ -33,6 +33,7 @@ const cartItemSlice = createSlice({
 					: item
 			);
 		},
+
 		clearCart: (state) => {
 			state.items = [];
 		},

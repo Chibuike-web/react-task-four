@@ -23,7 +23,7 @@ export default function ProductCard({
 	const discountRate = discount && discount / 100;
 	const discountPrice = discountRate && Math.round(price * (1 - discountRate));
 	const [hoverId, setHoverId] = useState("");
-
+	const [status, setStatus] = useState<"idle" | "added">("idle");
 	const dispatch = useDispatch();
 	const cartItem = useSelector((state: RootState) => state.cartItem.items);
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
@@ -40,6 +40,11 @@ export default function ProductCard({
 				quantity: 1,
 			})
 		);
+		setStatus("added");
+
+		setTimeout(() => {
+			setStatus("idle");
+		}, 2000);
 	};
 
 	const toggleWishlist = () => {
@@ -94,7 +99,11 @@ export default function ProductCard({
 								}}
 								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								{isAlreadyInCart ? "Already in the Cart" : "Add to Cart"}
+								{isAlreadyInCart
+									? status === "added"
+										? "Added to Cart"
+										: "Already in Cart"
+									: "Add to Cart"}
 							</motion.button>
 						)}
 					</AnimatePresence>
@@ -158,7 +167,7 @@ export function MainProductCard({
 }: Product) {
 	const { full, half, empty } = getStarRating(rating);
 	const [hoverId, setHoverId] = useState("");
-
+	const [status, setStatus] = useState<"idle" | "added">("idle");
 	const dispatch = useDispatch();
 	const cartItem = useSelector((state: RootState) => state.cartItem.items);
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
@@ -174,6 +183,11 @@ export function MainProductCard({
 				quantity: 1,
 			})
 		);
+		setStatus("added");
+
+		setTimeout(() => {
+			setStatus("idle");
+		}, 2000);
 	};
 
 	const toggleWishlist = () => {
@@ -223,7 +237,11 @@ export function MainProductCard({
 								}}
 								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								{isAlreadyInCart ? "Already in the Cart" : "Add to Cart"}
+								{isAlreadyInCart
+									? status === "added"
+										? "Added to Cart"
+										: "Already in Cart"
+									: "Add to Cart"}
 							</motion.button>
 						)}
 					</AnimatePresence>

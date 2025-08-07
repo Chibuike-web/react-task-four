@@ -58,6 +58,7 @@ export default function Navbar() {
 	].filter((link) => !(link.id === "signup" && signIn));
 
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
+	const cartItem = useSelector((state: RootState) => state.cartItem.items);
 
 	return (
 		<header className="relative z-[1000]">
@@ -106,7 +107,14 @@ export default function Navbar() {
 									)}
 									<Heart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
 								</Link>
-								<ShoppingCart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
+								<Link to="/cart" className="relative">
+									{cartItem.length > 0 && (
+										<span className="absolute bg-primary text-white text-[10px] rounded-full size-3 right-0 top-0 flex items-center justify-center">
+											{cartItem.length}
+										</span>
+									)}
+									<ShoppingCart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
+								</Link>
 								{signIn && (
 									<button
 										onClick={() => setProfile((prev) => !prev)}

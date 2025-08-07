@@ -8,7 +8,7 @@ import { Link } from "react-router";
 import { useState } from "react";
 import type { Product } from "../lib/types";
 import allProducts from "../lib/data.json";
-import ProductCard, { MainProductCard } from "../components/ProductCard";
+import ProductCard from "../components/ProductCard";
 
 export default function Wishlist() {
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
