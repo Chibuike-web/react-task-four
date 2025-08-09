@@ -55,6 +55,18 @@ export default function ProductCard({
 		}
 	};
 
+	let cartButtonLabel = null;
+
+	if (isAlreadyInCart) {
+		if (status === "added") {
+			cartButtonLabel = "Added to Cart";
+		} else {
+			cartButtonLabel = "Already in cart";
+		}
+	} else {
+		cartButtonLabel = "Add to cart";
+	}
+
 	return (
 		<article className="relative w-full">
 			{tags?.includes("Flash Sales") && (
@@ -99,11 +111,7 @@ export default function ProductCard({
 								}}
 								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								{isAlreadyInCart
-									? status === "added"
-										? "Added to Cart"
-										: "Already in Cart"
-									: "Add to Cart"}
+								{cartButtonLabel}
 							</motion.button>
 						)}
 					</AnimatePresence>
@@ -198,6 +206,18 @@ export function MainProductCard({
 		}
 	};
 
+	let cartButtonLabel = null;
+
+	if (isAlreadyInCart) {
+		if (status === "added") {
+			cartButtonLabel = "Added to Cart";
+		} else {
+			cartButtonLabel = "Already in cart";
+		}
+	} else {
+		cartButtonLabel = "Add to cart";
+	}
+
 	return (
 		<article className="relative w-full">
 			{tags?.includes("New") && (
@@ -237,11 +257,7 @@ export function MainProductCard({
 								}}
 								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								{isAlreadyInCart
-									? status === "added"
-										? "Added to Cart"
-										: "Already in Cart"
-									: "Add to Cart"}
+								{cartButtonLabel}
 							</motion.button>
 						)}
 					</AnimatePresence>
