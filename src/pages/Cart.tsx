@@ -4,6 +4,8 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import type { CartItemType } from "../lib/types";
 import { decreaseItemQuantity, increaseItemQuantity } from "../lib/store/cartItemSlice";
 import { useMediaQuery } from "../lib/Hooks";
+import React from "react";
+import { Link } from "react-router";
 
 export default function Cart() {
 	const cartItem = useSelector((state: RootState) => state.cartItem.items);
@@ -11,10 +13,10 @@ export default function Cart() {
 		return state.cartItem.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 	};
 	const subtotal = useSelector(selectCartSubtotal);
-	const matches = useMediaQuery("min-width:768px");
+	const matches = useMediaQuery("(min-width:768px)");
 	return (
 		<main className="max-w-[73.125rem] mx-auto pt-[60px] pb-[140px] px-6 xl:px-0">
-			<div className="mt-20 flex gap-6">
+			<div className="flex gap-6">
 				<span>Home</span>
 				<span>/</span>
 				<span>Cart</span>
@@ -30,13 +32,9 @@ export default function Cart() {
 			</div>
 			<div className="flex flex-col gap-10 mt-10">
 				{cartItem.map((item) => (
-					<>
-						{matches ? (
-							<DesktopCartItemList key={item.id} {...item} />
-						) : (
-							<MobileCartItemList key={item.id} {...item} />
-						)}
-					</>
+					<React.Fragment key={item.id}>
+						{matches ? <DesktopCartItemList {...item} /> : <MobileCartItemList {...item} />}
+					</React.Fragment>
 				))}
 			</div>
 			<div className="flex flex-col sm:flex-row gap-y-4 sm:justify-between sm:items-center w-full mt-6">
@@ -75,9 +73,12 @@ export default function Cart() {
 						<span>Total:</span>
 						<span>${subtotal}</span>
 					</div>
-					<button className="bg-primary text-white px-4 py-2 md:px-12 md:py-4 rounded-[4px] flex justify-self-center mt-4">
+					<Link
+						to="/checkout"
+						className="bg-primary text-white px-4 py-2 md:px-12 md:py-4 rounded-[4px] flex justify-self-center mt-4"
+					>
 						Proceed to checkout
-					</button>
+					</Link>
 				</div>
 			</div>
 		</main>
