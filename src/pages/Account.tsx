@@ -33,12 +33,12 @@ export default function Account() {
 		}
 	};
 	return (
-		<main className="max-w-[73.125rem] mx-auto pt-8 pb-[140px] px-6 xl:px-0">
+		<main className="max-w-[73.125rem] mx-auto pt-20 pb-[140px] px-6 xl:px-0">
 			<div className="flex items-center justify-between w-full">
 				<div className="flex gap-6 text-black/40">
 					<span>Home</span>
 					<span>/</span>
-					<span className="text-black">Checkout</span>
+					<span className="text-black">My Account</span>
 				</div>
 				<div>
 					Welcome! <span className="text-primary">Md Rimel</span>
@@ -81,7 +81,7 @@ export default function Account() {
 
 const Profile = () => {
 	return (
-		<div className="w-full max-w-[870px] px-20 py-10 shadow-amber-500">
+		<div className="w-full max-w-[870px] px-20 py-10 shadow">
 			<h2 className="text-primary text-[20px] font-medium">Edit Your Profile</h2>
 
 			<div className="flex flex-col gap-6 items-end mt-4">

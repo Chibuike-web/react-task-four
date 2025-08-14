@@ -15,7 +15,7 @@ export default function Checkout() {
 	};
 	const subtotal = useSelector(selectCartSubtotal);
 	return (
-		<main className="max-w-[73.125rem] mx-auto pt-8 pb-[140px] px-6 xl:px-0">
+		<main className="max-w-[73.125rem] mx-auto pt-20 pb-[140px] px-6 xl:px-0">
 			<div className="flex gap-6 flex-wrap text-black/40">
 				<span>Account</span>
 				<span>/</span>

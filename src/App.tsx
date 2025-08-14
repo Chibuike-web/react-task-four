@@ -31,6 +31,6 @@ const router = createBrowserRouter([
 ]);
 export default function App() {
 	const { hydrated } = useContext(Context);
-	// if (!hydrated) return null;
+	if (!hydrated) return null;
 	return <RouterProvider router={router} />;
 }

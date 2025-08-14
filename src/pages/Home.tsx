@@ -346,7 +346,7 @@ const NewArrivalSection = () => {
 	);
 };
 
-const FeatureSection = () => {
+export const FeatureSection = () => {
 	return (
 		<section className="my-[70px] max-w-[73.125rem] mx-auto flex flex-col items-center md:my-[140px]">
 			<div className="flex items-center justify-center flex-wrap gap-[88px]">

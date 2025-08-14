@@ -15,7 +15,7 @@ export default function Cart() {
 	const subtotal = useSelector(selectCartSubtotal);
 	const matches = useMediaQuery("(min-width:768px)");
 	return (
-		<main className="max-w-[73.125rem] mx-auto pt-[60px] pb-[140px] px-6 xl:px-0">
+		<main className="max-w-[73.125rem] mx-auto pt-20 pb-[140px] px-6 xl:px-0">
 			<div className="flex gap-6">
 				<span>Home</span>
 				<span>/</span>
