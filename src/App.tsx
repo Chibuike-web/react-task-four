@@ -9,6 +9,8 @@ import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Account from "./pages/Account";
+import { Context } from "./context/userContext";
+import { useContext } from "react";
 
 const router = createBrowserRouter([
 	{
@@ -28,5 +30,7 @@ const router = createBrowserRouter([
 	},
 ]);
 export default function App() {
+	const { hydrated } = useContext(Context);
+	// if (!hydrated) return null;
 	return <RouterProvider router={router} />;
 }

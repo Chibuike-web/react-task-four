@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useNavigate } from "react-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useContext } from "react";
+import { Context } from "../context/userContext";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -18,8 +20,9 @@ export default function Login() {
 
 	type LoginSchemaType = z.infer<typeof loginSchema>;
 
+	const { setUser } = useContext(Context);
+
 	const onSubmit = async (data: LoginSchemaType) => {
-		console.log("Form Data:", data);
 		const { email, password } = data;
 
 		try {
@@ -31,9 +34,8 @@ export default function Login() {
 			}
 			reset();
 			navigate("/");
-			const user = {
-				email,
-			};
+			const user = { email };
+			setUser(user.email);
 			localStorage.setItem("user", JSON.stringify(user));
 		} catch (err) {
 			if (typeof err === "object" && err !== null && "code" in err) {

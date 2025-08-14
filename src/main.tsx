@@ -4,11 +4,14 @@ import "./globals.css";
 import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./lib/store/store.ts";
+import UserContextProvider from "./context/userContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<Provider store={store}>
-			<App />
-		</Provider>
+		<UserContextProvider>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</UserContextProvider>
 	</StrictMode>
 );

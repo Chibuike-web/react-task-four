@@ -1,28 +1,24 @@
 import { Link, NavLink, useLocation, useMatch } from "react-router";
 import { Heart, ShoppingCart, Search, ChevronDown, Menu, X } from "lucide-react";
-import { useCallback, useEffect, useState, type ComponentType } from "react";
+import { useCallback, useContext, useEffect, useState, type ComponentType } from "react";
 import { cn } from "../lib/utils";
 import { CancelIcon, LogoutIcon, OrderIcon, ProfileIcon, StarIcon } from "../assets/Icons";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import type { RootState } from "../lib/store/store";
+import { Context } from "../context/userContext";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [signIn, setSignedIn] = useState("");
+
 	const [profile, setProfile] = useState(false);
+
 	const { pathname } = useLocation();
 	const handleToggle = useCallback(() => {
 		setIsOpen((prev) => !prev);
 		setProfile(false);
 	}, []);
-
-	useEffect(() => {
-		const storedUser = localStorage.getItem("user");
-		if (!storedUser) return;
-		const user = JSON.parse(storedUser);
-		setSignedIn(user.email);
-	}, []);
+	const { user } = useContext(Context);
 
 	useEffect(() => {
 		const profileDropdown = (e: MouseEvent) => {
@@ -55,7 +51,7 @@ export default function Navbar() {
 			id: "signup",
 			label: "Sign Up",
 		},
-	].filter((link) => !(link.id === "signup" && signIn));
+	].filter((link) => !(link.id === "signup" && user));
 
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
 	const cartItem = useSelector((state: RootState) => state.cartItem.items);
@@ -95,7 +91,12 @@ export default function Navbar() {
 						})}
 					</ul>
 
-					<div className={cn("flex items-center", !isExist ? "gap-8" : "gap-0")}>
+					<div
+						className={cn(
+							"flex items-center w-max lg:w-full lg:max-w-[350px]",
+							!isExist ? "gap-8 justify-between" : "gap-0 justify-between"
+						)}
+					>
 						<Searchbar />
 						{!isExist && (
 							<div className="flex items-center gap-4 relative">
@@ -105,6 +106,7 @@ export default function Navbar() {
 											{wishlist.length}
 										</span>
 									)}
+
 									<Heart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
 								</Link>
 								<Link to="/cart" className="relative">
@@ -115,7 +117,7 @@ export default function Navbar() {
 									)}
 									<ShoppingCart className="size-[clamp(1.2rem,2vw,1.5rem)]" />
 								</Link>
-								{signIn && (
+								{user && (
 									<button
 										onClick={() => setProfile((prev) => !prev)}
 										className={cn(
@@ -151,8 +153,9 @@ export default function Navbar() {
 								)}
 							</div>
 						)}
-						<button onClick={handleToggle}>
-							{isOpen ? <X /> : <Menu className="size-[clamp(1.5rem,2vw,2rem)] lg:hidden" />}
+
+						<button onClick={handleToggle} className=" lg:hidden">
+							{isOpen ? <X /> : <Menu className="size-[clamp(1.5rem,2vw,2rem)]" />}
 						</button>
 					</div>
 				</div>
@@ -203,7 +206,7 @@ const Searchbar = () => {
 				type="text"
 				name="search"
 				placeholder="What are you looking for?"
-				className="bg-gray-200 h-[38px] rounded-[7px] placeholder:text-[12px] pl-4 focus:border-2 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none"
+				className="bg-gray-200 h-[38px] w-full rounded-[7px] placeholder:text-[12px] pl-4 focus:border-2 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none"
 			/>
 			<span className="absolute right-2 top-1/2 -translate-y-1/2">
 				<Search />

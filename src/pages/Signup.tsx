@@ -21,7 +21,6 @@ export default function Signup() {
 	});
 
 	const onSubmit = async (data: AuthSchemaType) => {
-		console.log("Form Data:", data);
 		const { email, password } = data;
 
 		try {
