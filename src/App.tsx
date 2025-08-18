@@ -11,6 +11,7 @@ import Checkout from "./pages/Checkout";
 import Account from "./pages/Account";
 import { Context } from "./context/userContext";
 import { useContext } from "react";
+import Contact from "./pages/Contact";
 
 const router = createBrowserRouter([
 	{
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
 			{ path: "cart", element: <Cart /> },
 			{ path: "checkout", element: <Checkout /> },
 			{ path: "account", element: <Account /> },
+			{ path: "contact", element: <Contact /> },
 			{ path: "*", element: <NotFound /> },
 		],
 	},

@@ -1,6 +1,14 @@
 import { useState, type ComponentType } from "react";
 import heroImage from "../assets/about/hero-image.png";
-import { MoneyBag, SaleIcon, ShopIcon, ShoppingIcon } from "../assets/Icons";
+import {
+	Instagram,
+	LinkedIn,
+	MoneyBag,
+	SaleIcon,
+	ShopIcon,
+	ShoppingIcon,
+	Twitter,
+} from "../assets/Icons";
 import { FeatureSection } from "./Home";
 import tomCruise from "../assets/about/tom-cruise.png";
 import emmaWatson from "../assets/about/emma-watson.png";
@@ -38,6 +46,7 @@ export default function About() {
 			</div>
 			<Stats />
 			<Team />
+			<CarouselDots />
 			<FeatureSection />
 		</main>
 	);
@@ -101,6 +110,11 @@ function Team() {
 						<h3 className="text-lg text-gray-800 text-[32px] font-medium">{member.name}</h3>
 						<p className="text-sm text-gray-500">{member.role}</p>
 					</div>
+					<div className="flex items-center gap-4 mt-4">
+						<Twitter />
+						<Instagram />
+						<LinkedIn />
+					</div>
 				</div>
 			))}
 		</div>
@@ -112,3 +126,23 @@ const teamData = [
 	{ name: "Emma Watson", role: "Managing Director", image: emmaWatson },
 	{ name: "Will Smith", role: "Product Designer", image: willSmith },
 ];
+
+function CarouselDots() {
+	const [active, setActive] = useState<number | null>(null);
+	return (
+		<div className="flex gap-3 justify-self-center mt-6">
+			{Array.from({ length: 5 }, (_, i) => (
+				<button
+					key={i}
+					onClick={() => setActive(i)}
+					className={cn(
+						"size-[12px] block bg-black/30 rounded-full flex-shrink-0",
+						active === i
+							? "border border-white bg-primary shadow-[0px_0px_0px_3px_rgba(0,0,0,0.2)]"
+							: ""
+					)}
+				/>
+			))}
+		</div>
+	);
+}
