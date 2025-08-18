@@ -107,7 +107,6 @@ export default function ProductCard({
 									e.preventDefault();
 									e.stopPropagation();
 									handleAddToCart();
-									console.log("click");
 								}}
 								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>

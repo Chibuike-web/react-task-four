@@ -182,13 +182,13 @@ const profileItem: ProfileItem[] = [
 	{
 		id: uuidv4(),
 		label: "My Order",
-		link: "/account?orders=returns",
+		link: "/account?tab=my-returns",
 		icon: OrderIcon,
 	},
 	{
 		id: uuidv4(),
 		label: "My Cancellations",
-		link: "/account",
+		link: "/account?tab=my-cancellations",
 		icon: CancelIcon,
 	},
 	{

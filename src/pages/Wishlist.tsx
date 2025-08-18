@@ -9,6 +9,7 @@ import { useState } from "react";
 import type { Product } from "../lib/types";
 import allProducts from "../lib/data.json";
 import ProductCard from "../components/ProductCard";
+import { addToCart } from "../lib/store/cartItemSlice";
 
 export default function Wishlist() {
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
@@ -56,9 +57,10 @@ function WishlistProductCard({ id, image, discount, name, price, rating, reviews
 	const discountPrice = discountRate && Math.round(price * (1 - discountRate));
 	const [hoverId, setHoverId] = useState("");
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
-
+	const [status, setStatus] = useState<"idle" | "added">("idle");
 	const dispatch = useDispatch();
-
+	const cartItem = useSelector((state: RootState) => state.cartItem.items);
+	const isAlreadyInCart = cartItem.some((item) => item.id === id);
 	const isWishlisted = wishlist.some((item) => item.id === id);
 
 	const toggleWishlist = () => {
@@ -68,6 +70,35 @@ function WishlistProductCard({ id, image, discount, name, price, rating, reviews
 			dispatch(addToWishlist({ id, image, name, price, rating, reviews, tags }));
 		}
 	};
+
+	const handleAddToCart = () => {
+		dispatch(
+			addToCart({
+				id,
+				image,
+				price,
+				name,
+				quantity: 1,
+			})
+		);
+		setStatus("added");
+
+		setTimeout(() => {
+			setStatus("idle");
+		}, 2000);
+	};
+
+	let cartButtonLabel = null;
+
+	if (isAlreadyInCart) {
+		if (status === "added") {
+			cartButtonLabel = "Added to Cart";
+		} else {
+			cartButtonLabel = "Already in cart";
+		}
+	} else {
+		cartButtonLabel = "Add to cart";
+	}
 
 	return (
 		<article className="relative w-full">
@@ -90,18 +121,19 @@ function WishlistProductCard({ id, image, discount, name, price, rating, reviews
 					<AnimatePresence>
 						{hoverId === id && (
 							<motion.button
+								disabled={isAlreadyInCart}
 								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
+								animate={{ opacity: isAlreadyInCart ? 0.5 : 1, y: 0 }}
 								transition={{ duration: 0.2 }}
 								exit={{ opacity: 0, y: 20 }}
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
-									console.log("Add to cart");
+									handleAddToCart();
 								}}
-								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer"
+								className="left-0 bottom-0 absolute right-0 flex items-center justify-center bg-black text-white h-10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
 							>
-								Add to Cart
+								{cartButtonLabel}
 							</motion.button>
 						)}
 					</AnimatePresence>
