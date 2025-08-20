@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../lib/store/store";
-import { addToWishlist, removeFromWishlist } from "../lib/store/wishlistSlice";
+import type { RootState } from "../store/store";
+import { addToWishlist, removeFromWishlist } from "../store/wishlistSlice";
 import { cn } from "../lib/utils";
 import { Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import type { Product } from "../lib/types";
 import allProducts from "../lib/data.json";
 import ProductCard from "../components/ProductCard";
-import { addToCart } from "../lib/store/cartItemSlice";
+import { addToCart } from "../store/cartItemSlice";
 
 export default function Wishlist() {
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
@@ -52,7 +52,16 @@ export default function Wishlist() {
 	);
 }
 
-function WishlistProductCard({ id, image, discount, name, price, rating, reviews, tags }: Product) {
+function WishlistProductCard({
+	id,
+	images,
+	discount,
+	name,
+	price,
+	rating,
+	reviews,
+	tags,
+}: Product) {
 	const discountRate = discount && discount / 100;
 	const discountPrice = discountRate && Math.round(price * (1 - discountRate));
 	const [hoverId, setHoverId] = useState("");
@@ -67,7 +76,7 @@ function WishlistProductCard({ id, image, discount, name, price, rating, reviews
 		if (isWishlisted) {
 			dispatch(removeFromWishlist(id));
 		} else {
-			dispatch(addToWishlist({ id, image, name, price, rating, reviews, tags }));
+			dispatch(addToWishlist({ id, images, name, price, rating, reviews, tags }));
 		}
 	};
 
@@ -75,7 +84,7 @@ function WishlistProductCard({ id, image, discount, name, price, rating, reviews
 		dispatch(
 			addToCart({
 				id,
-				image,
+				image: images[0],
 				price,
 				name,
 				quantity: 1,
@@ -117,7 +126,7 @@ function WishlistProductCard({ id, image, discount, name, price, rating, reviews
 			</div>
 			<Link to={`/${id}`} onMouseEnter={() => setHoverId(id)} onMouseLeave={() => setHoverId("")}>
 				<div className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden">
-					<img src={image} alt={`image of ${name}`} className="w-full max-w-[190px]" />
+					<img src={images[0]} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>
 						{hoverId === id && (
 							<motion.button

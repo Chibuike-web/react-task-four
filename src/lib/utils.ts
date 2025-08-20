@@ -54,3 +54,5 @@ export const categories = [
 		icon: GamingIcon,
 	},
 ];
+
+export const sizes = ["XS", "S", "M", "L", "XL"];

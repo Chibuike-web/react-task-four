@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../lib/store/store";
+import type { RootState } from "../store/store";
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../lib/utils";

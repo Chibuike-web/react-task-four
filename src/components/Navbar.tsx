@@ -5,7 +5,7 @@ import { cn } from "../lib/utils";
 import { CancelIcon, LogoutIcon, OrderIcon, ProfileIcon, StarIcon } from "../assets/Icons";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
-import type { RootState } from "../lib/store/store";
+import type { RootState } from "../store/store";
 import { Context } from "../context/userContext";
 
 export default function Navbar() {

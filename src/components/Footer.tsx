@@ -5,6 +5,7 @@ import qrCode from "../assets/footer/qr-code.png";
 import apple from "../assets/footer/apple.png";
 import googlePlay from "../assets/footer/google-play.png";
 import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from "../assets/Icons";
+import { Link } from "react-router";
 
 export default function Footer() {
 	return (
@@ -29,9 +30,13 @@ export default function Footer() {
 						<p>{i.heading}</p>
 						<div className="flex flex-col gap-2">
 							{i.items.map((item, index) => (
-								<p key={item.id} className={cn(index === 0 && "max-w-[175px]")}>
+								<Link
+									to={`/${item.id}`}
+									key={item.id}
+									className={cn(index === 0 && "max-w-[175px]")}
+								>
 									{item.label}
-								</p>
+								</Link>
 							))}
 						</div>
 					</div>

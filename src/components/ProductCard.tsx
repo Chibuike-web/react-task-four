@@ -1,17 +1,18 @@
 import { Eye, Heart, Star, StarHalf } from "lucide-react";
 import { Link } from "react-router";
 import { cn, getStarRating } from "../lib/utils";
-import type { Colors, Product } from "../lib/types";
+import type { Product } from "../lib/types";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../lib/store/store";
-import { addToWishlist, removeFromWishlist } from "../lib/store/wishlistSlice";
-import { addToCart } from "../lib/store/cartItemSlice";
+import type { RootState } from "../store/store";
+import { addToWishlist, removeFromWishlist } from "../store/wishlistSlice";
+import { addToCart } from "../store/cartItemSlice";
+import ProductColors from "./ProductColors";
 
 export default function ProductCard({
 	id,
-	image,
+	images,
 	discount,
 	name,
 	price,
@@ -34,7 +35,7 @@ export default function ProductCard({
 		dispatch(
 			addToCart({
 				id,
-				image,
+				image: images[0],
 				price,
 				name,
 				quantity: 1,
@@ -51,7 +52,7 @@ export default function ProductCard({
 		if (isWishlisted) {
 			dispatch(removeFromWishlist(id));
 		} else {
-			dispatch(addToWishlist({ id, image, name, price, rating, reviews, tags }));
+			dispatch(addToWishlist({ id, images, name, price, rating, reviews, tags }));
 		}
 	};
 
@@ -88,13 +89,13 @@ export default function ProductCard({
 					<Eye />
 				</span>
 			</div>
-			<Link to={`/${id}`}>
+			<Link to={`products/${id}`}>
 				<div
 					className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden "
 					onMouseEnter={() => setHoverId(id)}
 					onMouseLeave={() => setHoverId("")}
 				>
-					<img src={image} alt={`image of ${name}`} className="w-full max-w-[190px]" />
+					<img src={images[0]} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>
 						{hoverId === id && (
 							<motion.button
@@ -143,7 +144,7 @@ export default function ProductCard({
 	);
 }
 
-const Rating = ({ full, empty, half }: { full: number; empty: number; half: number }) => {
+export const Rating = ({ full, empty, half }: { full: number; empty: number; half: number }) => {
 	return (
 		<div className="flex">
 			{Array.from({ length: full }, (_, i) => (
@@ -164,7 +165,7 @@ const Rating = ({ full, empty, half }: { full: number; empty: number; half: numb
 
 export function MainProductCard({
 	id,
-	image,
+	images,
 	name,
 	price,
 	rating,
@@ -184,7 +185,7 @@ export function MainProductCard({
 		dispatch(
 			addToCart({
 				id,
-				image,
+				image: images[0],
 				price,
 				name,
 				quantity: 1,
@@ -201,7 +202,7 @@ export function MainProductCard({
 		if (isWishlisted) {
 			dispatch(removeFromWishlist(id));
 		} else {
-			dispatch(addToWishlist({ id, image, name, price, rating, reviews, tags, colors }));
+			dispatch(addToWishlist({ id, images, name, price, rating, reviews, tags, colors }));
 		}
 	};
 
@@ -238,9 +239,13 @@ export function MainProductCard({
 					<Eye />
 				</span>
 			</div>
-			<Link to={`/${id}`} onMouseEnter={() => setHoverId(id)} onMouseLeave={() => setHoverId("")}>
+			<Link
+				to={`products/${id}`}
+				onMouseEnter={() => setHoverId(id)}
+				onMouseLeave={() => setHoverId("")}
+			>
 				<div className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden ">
-					<img src={image} alt={`image of ${name}`} className="w-full max-w-[190px]" />
+					<img src={images[0]} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>
 						{hoverId === id && (
 							<motion.button
@@ -275,30 +280,3 @@ export function MainProductCard({
 		</article>
 	);
 }
-
-const ProductColors = ({ colors }: { colors: Colors[] }) => {
-	if (!colors || colors.length === 0) return null;
-	const [colorId, setColorId] = useState(colors[0].id);
-
-	return (
-		<div className="flex gap-2 mt-2">
-			{colors.map(({ id, label, colorCode }) => (
-				<span
-					key={id}
-					role="button"
-					tabIndex={0}
-					onClick={() => setColorId(id)}
-					onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setColorId(id)}
-					title={label}
-					className={cn(
-						"w-5 h-5 rounded-full inline-block cursor-pointer",
-						colorCode,
-						id === colorId && "border-4 border-white shadow-[0_0_0_2px_rgba(0,0,0,1)]"
-					)}
-				>
-					<span className="sr-only">{label}</span>
-				</span>
-			))}
-		</div>
-	);
-};

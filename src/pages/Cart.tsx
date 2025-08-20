@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../lib/store/store";
+import type { RootState } from "../store/store";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import type { CartItemType } from "../lib/types";
-import { decreaseItemQuantity, increaseItemQuantity } from "../lib/store/cartItemSlice";
+import { decreaseItemQuantity, increaseItemQuantity } from "../store/cartItemSlice";
 import { useMediaQuery } from "../lib/Hooks";
 import React from "react";
 import { Link } from "react-router";
