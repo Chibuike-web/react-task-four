@@ -9,6 +9,7 @@ import type { RootState } from "../store/store";
 import { addToWishlist, removeFromWishlist } from "../store/wishlistSlice";
 import { addToCart } from "../store/cartItemSlice";
 import ProductColors from "./ProductColors";
+import { useDetailsContext } from "../context/DetailsContext";
 
 export default function ProductCard({
 	id,
@@ -30,6 +31,7 @@ export default function ProductCard({
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
 	const isWishlisted = wishlist.some((item) => item.id === id);
 	const isAlreadyInCart = cartItem.some((item) => item.id === id);
+	const { getQuantity } = useDetailsContext();
 
 	const handleAddToCart = () => {
 		dispatch(
@@ -38,7 +40,7 @@ export default function ProductCard({
 				image: images[0],
 				price,
 				name,
-				quantity: 1,
+				quantity: getQuantity(id),
 			})
 		);
 		setStatus("added");
@@ -89,7 +91,7 @@ export default function ProductCard({
 					<Eye />
 				</span>
 			</div>
-			<Link to={`products/${id}`}>
+			<Link to={`/products/${id}`}>
 				<div
 					className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden "
 					onMouseEnter={() => setHoverId(id)}
@@ -181,6 +183,8 @@ export function MainProductCard({
 	const wishlist = useSelector((state: RootState) => state.wishlist.items);
 	const isWishlisted = wishlist.some((item) => item.id === id);
 	const isAlreadyInCart = cartItem.some((item) => item.id === id);
+	const { getQuantity } = useDetailsContext();
+
 	const handleAddToCart = () => {
 		dispatch(
 			addToCart({
@@ -188,7 +192,7 @@ export function MainProductCard({
 				image: images[0],
 				price,
 				name,
-				quantity: 1,
+				quantity: getQuantity(id),
 			})
 		);
 		setStatus("added");

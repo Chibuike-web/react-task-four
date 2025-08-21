@@ -124,7 +124,11 @@ function WishlistProductCard({
 					<Trash2 />
 				</button>
 			</div>
-			<Link to={`/${id}`} onMouseEnter={() => setHoverId(id)} onMouseLeave={() => setHoverId("")}>
+			<Link
+				to={`/products/${id}`}
+				onMouseEnter={() => setHoverId(id)}
+				onMouseLeave={() => setHoverId("")}
+			>
 				<div className="bg-gray-100 w-full h-[250px] flex items-center justify-center rounded-[8px] relative overflow-hidden">
 					<img src={images[0]} alt={`image of ${name}`} className="w-full max-w-[190px]" />
 					<AnimatePresence>

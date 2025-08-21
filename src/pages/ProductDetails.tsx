@@ -3,14 +3,24 @@ import allProducts from "../lib/data.json";
 import type { Product } from "../lib/types";
 import { useState } from "react";
 import { cn, getStarRating, sizes } from "../lib/utils";
-import { Rating } from "../components/ProductCard";
+import ProductCard, { Rating } from "../components/ProductCard";
 import ProductColors from "../components/ProductColors";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import { Heart, Minus, Plus } from "lucide-react";
+import { increaseItemQuantity, decreaseItemQuantity } from "../store/cartItemSlice";
+import { useDetailsContext } from "../context/DetailsContext";
+import { DeliveryIcon, ReturnIcon } from "../assets/Icons";
 
 export default function ProductDetails() {
 	const { id } = useParams();
-
+	const cartItem = useSelector((state: RootState) => state.cartItem.items);
+	const dispatch = useDispatch();
+	const mainItem = cartItem.find((c) => c.id === id);
 	const product = allProducts.find((p) => p.id === id);
-
+	const { details, increaseQuantity, decreaseQuantity } = useDetailsContext();
+	const contextQuantity = details.find((d) => d.id === id)?.quantity ?? 1;
+	const quantityToShow = mainItem?.quantity ?? contextQuantity;
 	if (!product) return <div>Product not found</div>;
 	const { full, half, empty } = getStarRating(product.rating);
 	return (
@@ -48,13 +58,90 @@ export default function ProductDetails() {
 					<span />
 
 					<div>
-						Colors : <ProductColors colors={product.colors} />
+						<span className="text-[20px]">Colors:</span> <ProductColors colors={product.colors} />
 					</div>
 					<div className="flex items-center gap-4">
-						Size: <Sizes />
+						<span className="text-[20px]">Sizes:</span> <Sizes />
+					</div>
+
+					<div className="mt-6 flex items-center gap-4">
+						<div className=" h-[44px] flex items-center w-max">
+							<button
+								onClick={() => {
+									if (mainItem) {
+										dispatch(decreaseItemQuantity(product.id));
+									} else {
+										decreaseQuantity(product.id);
+									}
+								}}
+								className="border rounded-l-[8px] border-black/60 flex items-center justify-center w-10 h-full"
+							>
+								<Minus />
+							</button>
+							<span className="border-y h-full border-black/60 flex items-center justify-center w-[80px]">
+								{quantityToShow}
+							</span>
+
+							<button
+								onClick={() => {
+									if (mainItem) {
+										dispatch(increaseItemQuantity(product.id));
+									} else {
+										increaseQuantity(product.id);
+									}
+								}}
+								className=" flex items-center rounded-r-[8px] justify-center w-10 h-full bg-primary text-white"
+							>
+								<Plus />
+							</button>
+						</div>
+						<button className="bg-primary px-12 py-[10px] rounded-[4px] flex flex-shrink-0 text-white">
+							Buy Now
+						</button>
+						<button className="border border-black/50 rounded-[6px] size-10 flex items-center justify-center">
+							<Heart />
+						</button>
+					</div>
+					<div className="mt-10 border border-black/50 rounded-[6px]">
+						<div className="flex gap-4 m-6">
+							<span className="flex flex-shrink-0">
+								<DeliveryIcon />
+							</span>
+							<div className="flex flex-col gap-1">
+								<span>Free Delivery</span>
+								<span className="text-[12px]">
+									Enter your postal code for Delivery Availability
+								</span>
+							</div>
+						</div>
+						<span className="block w-full h-[1px] bg-black/50" />
+						<div className="flex gap-4 m-6">
+							<span className="flex flex-shrink-0">
+								<ReturnIcon />
+							</span>
+							<div className="flex flex-col gap-1">
+								<span>Return Delivery</span>
+								<span className="text-[12px]">Free 30 Days Delivery Returns. Details</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<section className="mt-40">
+				<div className="flex items-center gap-4 mb-[64px]">
+					<span className="block bg-primary w-[20px] h-10 rounded-[4px]" />
+					<span className="text-primary font-semibold ">Related</span>
+				</div>
+
+				<div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-7.5">
+					{allProducts
+						.filter((item) => item.tags?.includes("Just For You"))
+						.map((i) => (
+							<ProductCard key={i.id} {...i} />
+						))}
+				</div>
+			</section>
 		</main>
 	);
 }
@@ -63,7 +150,7 @@ const ImageCarousel = ({ product }: { product: Product }) => {
 	const [imageIndex, setImageIndex] = useState(0);
 	return (
 		<div className="flex gap-[30px] h-[600px]">
-			<div className="flex flex-col gap-4 overflow-auto min-w-[200px] ">
+			<div className="flex flex-col gap-4 overflow-auto min-w-[180px] ">
 				{product.images.map((image, index) => (
 					<button
 						key={index}

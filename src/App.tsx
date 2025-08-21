@@ -13,7 +13,7 @@ import { Context } from "./context/userContext";
 import { useContext } from "react";
 import Contact from "./pages/Contact";
 import ProductDetails from "./pages/ProductDetails";
-
+import DetailsContextProvider from "./context/DetailsContext";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -35,6 +35,11 @@ const router = createBrowserRouter([
 ]);
 export default function App() {
 	const { hydrated } = useContext(Context);
+
 	if (!hydrated) return null;
-	return <RouterProvider router={router} />;
+	return (
+		<DetailsContextProvider>
+			<RouterProvider router={router} />;
+		</DetailsContextProvider>
+	);
 }
