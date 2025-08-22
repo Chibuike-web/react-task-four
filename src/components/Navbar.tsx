@@ -6,7 +6,7 @@ import { CancelIcon, LogoutIcon, OrderIcon, ProfileIcon, StarIcon } from "../ass
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
-import { Context } from "../context/userContext";
+import { Context } from "../context/UserContext";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);

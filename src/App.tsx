@@ -9,7 +9,7 @@ import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Account from "./pages/Account";
-import { Context } from "./context/userContext";
+import { Context } from "./context/UserContext";
 import { useContext } from "react";
 import Contact from "./pages/Contact";
 import ProductDetails from "./pages/ProductDetails";

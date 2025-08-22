@@ -8,7 +8,7 @@ import z from "zod";
 import { useNavigate } from "react-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useContext } from "react";
-import { Context } from "../context/userContext";
+import { Context } from "../context/UserContext";
 
 export default function Login() {
 	const navigate = useNavigate();
