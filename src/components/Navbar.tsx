@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation, useMatch } from "react-router";
+import { Link, NavLink, useLocation, useMatch, useNavigate } from "react-router";
 import { Heart, ShoppingCart, Search, ChevronDown, Menu, X } from "lucide-react";
 import { useCallback, useContext, useEffect, useState, type ComponentType } from "react";
 import { cn } from "../lib/utils";
@@ -18,7 +18,8 @@ export default function Navbar() {
 		setIsOpen((prev) => !prev);
 		setProfile(false);
 	}, []);
-	const { user } = useContext(Context);
+	const { user, setUser } = useContext(Context);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const profileDropdown = (e: MouseEvent) => {
@@ -143,7 +144,14 @@ export default function Navbar() {
 												<span> {label}</span>
 											</Link>
 										))}
-										<li className="flex items-center gap-2 cursor-pointer">
+										<li
+											onClick={() => {
+												setUser(""); // clear context
+												localStorage.removeItem("user");
+												navigate("/login"); // optional redirect
+											}}
+											className="flex items-center gap-2 cursor-pointer"
+										>
 											<span>
 												<LogoutIcon />
 											</span>

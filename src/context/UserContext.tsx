@@ -1,10 +1,12 @@
 import { createContext, useLayoutEffect, useState } from "react";
 
-export const Context = createContext<{
+type UserContextType = {
 	user: string;
 	hydrated: boolean;
 	setUser: (value: string) => void;
-}>({
+};
+
+export const Context = createContext<UserContextType>({
 	user: "",
 	hydrated: false,
 	setUser: () => {},
