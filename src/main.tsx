@@ -4,7 +4,7 @@ import "./globals.css";
 import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
-import UserContextProvider from "./context/userContext.tsx";
+import UserContextProvider from "./context/UserContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>

@@ -35,12 +35,12 @@ export default function ProductDetails() {
 				</div>
 			</div>
 
-			<div className="flex gap-16">
+			<div className="flex flex-col gap-16 xl:flex-row">
 				<ImageCarousel product={product} />
 
-				<div>
-					<h1 className="text-[24px] font-semibold">{product.name}</h1>
-					<div>
+				<div className=" leading-[1] flex flex-col">
+					<h1 className="text-[24px] font-semibold mb-4">{product.name}</h1>
+					<div className="flex items-center gap-2 mb-4">
 						<Rating full={full} half={half} empty={empty} />{" "}
 						<span>
 							{product.reviews && product.reviews > 0
@@ -49,23 +49,23 @@ export default function ProductDetails() {
 						</span>
 						| <span className="text-green-500">In Stock</span>
 					</div>
-					<div>${product.price.toFixed(2)}</div>
-					<span>
+					<div className="text-[24px] mb-6">${product.price.toFixed(2)}</div>
+					<span className="text-[14px] leading-[1.4]">
 						PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy
 						bubble free install & mess free removal Pressure sensitive.
 					</span>
 
-					<span />
+					<span className="block h-[1px] w-full bg-black/50 my-6" />
 
-					<div>
+					<div className="flex items-center gap-4 mb-6">
 						<span className="text-[20px]">Colors:</span> <ProductColors colors={product.colors} />
 					</div>
 					<div className="flex items-center gap-4">
 						<span className="text-[20px]">Sizes:</span> <Sizes />
 					</div>
 
-					<div className="mt-6 flex items-center gap-4">
-						<div className=" h-[44px] flex items-center w-max">
+					<div className="mt-6 flex flex-col md:flex-row xl:items-center gap-4 w-full">
+						<div className=" h-[44px] flex items-center w-full md:w-max">
 							<button
 								onClick={() => {
 									if (mainItem) {
@@ -74,11 +74,11 @@ export default function ProductDetails() {
 										decreaseQuantity(product.id);
 									}
 								}}
-								className="border rounded-l-[8px] border-black/60 flex items-center justify-center w-10 h-full"
+								className="border rounded-l-[4px] border-black/60 flex items-center justify-center w-30 xl:w-10 h-full"
 							>
 								<Minus />
 							</button>
-							<span className="border-y h-full border-black/60 flex items-center justify-center w-[80px]">
+							<span className="border-y h-full border-black/60 flex items-center justify-center w-full xl:w-[80px]">
 								{quantityToShow}
 							</span>
 
@@ -90,20 +90,22 @@ export default function ProductDetails() {
 										increaseQuantity(product.id);
 									}
 								}}
-								className=" flex items-center rounded-r-[8px] justify-center w-10 h-full bg-primary text-white"
+								className=" flex items-center rounded-r-[4px] justify-center w-30 xl:w-10 h-full bg-primary text-white"
 							>
 								<Plus />
 							</button>
 						</div>
-						<button className="bg-primary px-12 py-[10px] rounded-[4px] flex flex-shrink-0 text-white">
-							Buy Now
-						</button>
-						<button className="border border-black/50 rounded-[6px] size-10 flex items-center justify-center">
-							<Heart />
-						</button>
+						<div className="flex items-center gap-4 w-full">
+							<button className="bg-primary px-12 py-[10px] w-full md:w-max rounded-[4px] flex justify-center text-white leading-[1.5] text-center">
+								Buy Now
+							</button>
+							<button className="border border-black/50 rounded-[6px] size-10 flex flex-shrink-0 items-center justify-center">
+								<Heart />
+							</button>
+						</div>
 					</div>
-					<div className="mt-10 border border-black/50 rounded-[6px]">
-						<div className="flex gap-4 m-6">
+					<div className="mt-10 border border-black/50 rounded-[6px] leading-[1.4]">
+						<div className="flex gap-4 my-4 px-6">
 							<span className="flex flex-shrink-0">
 								<DeliveryIcon />
 							</span>
@@ -149,14 +151,14 @@ export default function ProductDetails() {
 const ImageCarousel = ({ product }: { product: Product }) => {
 	const [imageIndex, setImageIndex] = useState(0);
 	return (
-		<div className="flex gap-[30px] h-[600px]">
-			<div className="flex flex-col gap-4 overflow-auto min-w-[180px] ">
+		<div className="flex flex-col-reverse xl:flex-row gap-[30px] xl:h-[600px]">
+			<div className="flex  xl:flex-col gap-4 overflow-auto min-w-[180px] ">
 				{product.images.map((image, index) => (
 					<button
 						key={index}
 						onClick={() => setImageIndex(index)}
 						className={cn(
-							"w-full min-h-[138px] flex items-center justify-center bg-[#F5F5F5]",
+							"w-full xl:min-h-[138px] flex items-center justify-center bg-[#F5F5F5]",
 							imageIndex !== index && "opacity-25"
 						)}
 					>
@@ -165,7 +167,7 @@ const ImageCarousel = ({ product }: { product: Product }) => {
 				))}
 			</div>
 
-			<div className="w-[500px]  bg-[#F5F5F5] flex justify-center items-center">
+			<div className="w-full xl:w-[500px] bg-[#F5F5F5] flex justify-center items-center h-[500px] xl:h-auto">
 				<img src={product.images[imageIndex]} className="object-cover w-full max-w-[446px]" />
 			</div>
 		</div>

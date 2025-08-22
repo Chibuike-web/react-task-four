@@ -39,7 +39,7 @@ export default function App() {
 	if (!hydrated) return null;
 	return (
 		<DetailsContextProvider>
-			<RouterProvider router={router} />;
+			<RouterProvider router={router} />
 		</DetailsContextProvider>
 	);
 }

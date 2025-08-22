@@ -192,7 +192,7 @@ export default function Home() {
 			<section className="max-w-[73.125rem] mx-auto flex flex-col gap-y-6 relative h-[46px] mb-8">
 				<button
 					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-					className="flex size-[46px] rounded-full bg-gray-100 items-center justify-center absolute right-0 translate-x-[100%]"
+					className="flex size-[46px] rounded-full bg-gray-100 items-center justify-center absolute right-0 xl:translate-x-[100%"
 				>
 					<ArrowUp />
 				</button>
